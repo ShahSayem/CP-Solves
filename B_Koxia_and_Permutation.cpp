@@ -16,31 +16,14 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n, m;
-    cin>>n>>m;
+    int n, k;
+    cin>>n>>k;
 
-    vector <ll> a(n), b(m);
-    for (int i = 0; i < n; i++){
-        cin>>a[i];
+    for (int i = n, j = 1; i > n/2; i--, j++){
+        cout<<i<<" ";
+        if (i != j)
+            cout<<j<<" ";
     }
-    sort(a.begin(), a.end());
-
-    for (int i = 0; i < m; i++){
-        cin>>b[i];
-    }
-
-    ll sum = 0, x = n;
-    for (int i = 0; i < m; i++){
-        a[0] = b[i];
-
-        sort(a.begin(), a.end());
-    }
-
-    for (int i = 0; i < n; i++){
-        sum += a[i];
-    }
-
-    cout<<sum;
 }
 
 int main()
