@@ -9,25 +9,46 @@ const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
 const int MAX = 10000000;
 
+//int dp[MAX];
+
 ///.........Graph.........///
-//vector <int> adj[10000000];
+//vector <int> adj[MAX];
 int X[] = {1, -1, 0, 0};
 int Y[] = {0, 0, 1, -1};
 
-
 void solve()
 {
-    int n;
+    int n, x = -1, y = -1;
     cin>>n;
+    string s;
+    cin>>s;
 
-    for (int i = 2; i*i <= n; i++){
-        if (n%i == 0){
-            cout<<n/i<<" "<<n-(n/i);
+    for (int i = 0; i < n; i++){
+        if (s[i] == 'R' && x == -1){
+            x = i;
+        }
+        if (s[i] == 'L'){
+            y = i;
+        }
+    }
+    
+    if (x >= 0 && y >= 0){
+        if (x < y){
+            cout<<0;
             return;
         }
-    } 
+    }
+    else {
+        cout<<-1;
+        return;
+    }
 
-    cout<<1<<" "<<n-1;
+    for (int i = 1; i < n; i++){
+        if (s[i] == 'R' && s[i-1] == 'L'){
+            cout<<i;
+            return;
+        }
+    }
 }
 
 int main()

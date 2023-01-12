@@ -9,25 +9,36 @@ const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
 const int MAX = 10000000;
 
+//int dp[MAX];
+
 ///.........Graph.........///
-//vector <int> adj[10000000];
+//vector <int> adj[MAX];
 int X[] = {1, -1, 0, 0};
 int Y[] = {0, 0, 1, -1};
 
-
 void solve()
 {
-    int n;
+    int n, x;
     cin>>n;
 
-    for (int i = 2; i*i <= n; i++){
-        if (n%i == 0){
-            cout<<n/i<<" "<<n-(n/i);
-            return;
-        }
-    } 
+    map <int, int> mp;
+    for (int i = 0; i < n; i++){
+        cin>>x;
+        mp[x]++;
+    }
+    
+    int sum = mp[4]+mp[3]+(mp[2]/2);
+        mp[1] -= mp[3];
+ 
+    if (mp[2]%2){
+        sum += 1;
+        mp[1] -= 2;
+    }
 
-    cout<<1<<" "<<n-1;
+    if (mp[1] > 0)
+        sum += (mp[1]+3) / 4;
+ 
+    cout<<sum;  
 }
 
 int main()
@@ -35,7 +46,7 @@ int main()
     Shah_Sayem
 
     int t = 1;
-    cin>>t;
+    //cin>>t;
     while (t--){
         solve();
         cout<<"\n";

@@ -9,33 +9,52 @@ const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
 const int MAX = 10000000;
 
+int dp[MAX];
+
 ///.........Graph.........///
 //vector <int> adj[10000000];
 int X[] = {1, -1, 0, 0};
 int Y[] = {0, 0, 1, -1};
 
+int h[MAX], k;
+int func(int i)
+{
+    if (i == 0)
+        return 0;
+
+    int cost = INT_MAX;
+
+    if (dp[i] != -1)
+        return dp[i];
+
+    for (int j = 1; j <= k; j++){
+        if (i-j >= 0)
+            cost = min(cost, func(i-j)+abs(h[i]-h[i-j]));
+    }
+      
+    return dp[i] = cost;
+}
 
 void solve()
 {
     int n;
-    cin>>n;
+    cin>>n>>k;
 
-    for (int i = 2; i*i <= n; i++){
-        if (n%i == 0){
-            cout<<n/i<<" "<<n-(n/i);
-            return;
-        }
-    } 
-
-    cout<<1<<" "<<n-1;
+    for (int i = 0; i < n; i++){
+        cin>>h[i];
+    }
+    
+    cout<<func(n-1);
 }
 
 int main()
 {
     Shah_Sayem
 
+    memset(dp, -1, sizeof(dp));
+
     int t = 1;
-    cin>>t;
+    //cin>>t;
     while (t--){
         solve();
         cout<<"\n";
