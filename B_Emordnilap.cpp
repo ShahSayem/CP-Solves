@@ -18,20 +18,20 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
+    ll n;
+    cin>>n;
 
-    int n = s.size();
-    for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
-
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
-        }
+    if (n == 1){
+        cout<<0;
+        return;
     }
+
+    ll ans = (n-1)*n;
+    for (int i = 1; i <= n; i++){
+        ans = ((ans%MOD)*i)%MOD;
+    }
+
+    cout<<ans;
 }
 
 int main()

@@ -12,37 +12,34 @@ const int MAX = 10000000;
 //int dp[MAX];
 
 ///.........Graph.........///
-//vector <int> adj[MAX];
+vector <int> adj[100];
 int X[] = {1, -1, 0, 0};
 int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
+    int n, m, s, e, u, v;
+    cin>>n>>m;
+    cin>>s>>e;
 
-    int n = s.size();
-    for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
-
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
-        }
+    while (m--){
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
+    
+    cout<<1<<"\n";
 }
 
 int main()
 {
     Shah_Sayem
 
-    int t = 1;
+    int t = 1, x = 1;
     cin>>t;
     while (t--){
+        cout<<"Case "<<x<<": ";
         solve();
-        cout<<"\n";
     }
 
     return 0;

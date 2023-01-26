@@ -18,20 +18,30 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
+    int n;
+    cin>>n;
+    vector <ll> v(n), preSum(n), sufSum(n);
 
-    int n = s.size();
     for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
-
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
-        }
+        cin>>v[i];
     }
+
+    preSum[0] = v[0];
+    for (int i = 1; i < n; i++){
+        preSum[i] = preSum[i-1]+v[i];
+    }
+
+    sufSum[n-1] = v[n-1];
+    for (int i = n-2; i >= 0; i--){
+        sufSum[i] = sufSum[i+1]+v[i];
+    }
+
+    ll ans = 0;
+    for (int i = 0; i < n-1; i++){
+        ans = max(ans, __gcd(preSum[i], sufSum[i+1]));
+    }
+
+    cout<<ans;
 }
 
 int main()

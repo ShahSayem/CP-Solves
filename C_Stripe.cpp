@@ -18,20 +18,26 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
+    int n, cnt = 0;
+    cin>>n;
 
-    int n = s.size();
+    vector <int> v(n);
+    ll sum1 = 0, sum2 = 0;
+
     for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
-
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
-        }
+        cin>>v[i];
+        sum1 += v[i];
     }
+
+    for (int i = 0; i < n-1; i++){
+        sum2 += v[i];
+        sum1 -= v[i];
+
+        if (sum1 == sum2)
+            cnt++;
+    }
+
+    cout<<cnt;  
 }
 
 int main()
@@ -39,7 +45,7 @@ int main()
     Shah_Sayem
 
     int t = 1;
-    cin>>t;
+    //cin>>t;
     while (t--){
         solve();
         cout<<"\n";

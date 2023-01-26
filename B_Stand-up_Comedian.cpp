@@ -18,20 +18,26 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
-
-    int n = s.size();
-    for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
-
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
-        }
+    int a1, a2, a3, a4, ans, temp;
+    cin>>a1>>a2>>a3>>a4;
+    int sum = a1+a2+a3+a4;
+    
+    ans = a1;
+    temp = min(a2, a3);
+    if (a1){
+        ans += 2*temp;
+        a2 -= temp;
+        a3 -= temp;
     }
+
+    a2 = min(a2, a1);
+    a3 = min(a3, a1);
+    ans += (a2 + a3);
+
+    temp = min({a4, a1-a2, a1-a3});
+
+    ans += temp+1;
+    cout<<min(ans, sum);
 }
 
 int main()

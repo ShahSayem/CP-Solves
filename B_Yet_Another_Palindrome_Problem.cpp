@@ -18,20 +18,29 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
+    int n;
+    cin>>n;
 
-    int n = s.size();
+    vector <int> v(n);
+    map <int, int> mp;
+    bool check = 0;
     for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
+        cin>>v[i];
+        mp[v[i]]++;
 
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
+        if (i && mp[v[i]] > 1 && v[i-1] != v[i]){
+            check = 1;
+        }
+
+        if (i > 1 && (v[i] == v[i-1] && v[i] == v[i-2])){
+            check = 1;
         }
     }
+
+    if (check)
+        cout<<"YES";
+    else 
+        cout<<"NO";
 }
 
 int main()

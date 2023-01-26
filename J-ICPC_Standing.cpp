@@ -18,19 +18,19 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
+    int p, s, r;
+    cin>>p>>s>>r;
 
-    int n = s.size();
-    for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
-
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
+    if (p == s){
+        if (r == 1){
+            cout<<"Yes";
         }
+        else {
+            cout<<"No";
+        }
+    }
+    else {
+        cout<<"Yes";
     }
 }
 
@@ -40,7 +40,8 @@ int main()
 
     int t = 1;
     cin>>t;
-    while (t--){
+    for (int i = 1; i <= t; i++){
+        cout<<"Case "<<i<<": ";
         solve();
         cout<<"\n";
     }

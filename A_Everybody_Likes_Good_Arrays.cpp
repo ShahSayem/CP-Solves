@@ -18,20 +18,22 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
+    int n, cnt = 0;
+    cin>>n;
 
-    int n = s.size();
+    vector <ll> v(n);
     for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
+        cin>>v[i];
+    }
 
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
+    for (int i = 0; i < n-1; i++){
+        if (v[i]%2 == v[i+1]%2){
+            cnt++;
+            v[i+1] = v[i];
         }
     }
+    
+    cout<<cnt;
 }
 
 int main()

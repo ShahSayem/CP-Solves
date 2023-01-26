@@ -18,20 +18,25 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
+    string s, x = "", y = "";
     cin>>s;
 
     int n = s.size();
-    for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
+    bool check = 0;
+    for (int i = 0; i < n/2; i++){
+        if (s[i] != s[n-i-1]){
+            check = 1;
+        }
+    }
 
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
+    for (int i = 0; i < n/2; i++){
+        if (s[i] == ){
+            cout<<"Alice";
             return;
         }
     }
+    
+    cout<<"Draw";
 }
 
 int main()

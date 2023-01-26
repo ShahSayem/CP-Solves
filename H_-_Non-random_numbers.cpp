@@ -18,28 +18,33 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    string s, a, b, c;
-    cin>>s;
+    int n;
+    cin>>n;
 
-    int n = s.size();
-    for (int i = 0; i < n; i++){
-        a = s.substr(0, i+1);
-        b = s.substr(i+1, 1);
-        c = s.substr(i+2, n-i+1);
+    ll ans = 8;
+    for (int i = 1; i < n ; i++){
+        if (i < 9)
+            ans *= 9;
+        else {
+            if (i == 9)
+                cout<<ans;
 
-        if ((b <= a && b <= c) || (b >= a && b >= c)){
-            cout<<a<<" "<<b<<" "<<c;
-            return;
+            cout<<0;
         }
     }
+    
+    if (n < 10)
+        cout<<ans;
 }
 
 int main()
 {
     Shah_Sayem
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt","w", stdout);
 
     int t = 1;
-    cin>>t;
+    //cin>>t;
     while (t--){
         solve();
         cout<<"\n";
