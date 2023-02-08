@@ -17,24 +17,32 @@ void solve()
 {
     int n, x;
     cin>>n>>x;
-
-    if (n%k){
+    
+    if (n%x){
         cout<<-1;
         return;
     }
-    
+
     vector <int> v(n+1);
     v[1] = x;
     v[n] = 1;
-    for (int i = 2; i < n; i++){
-        if (i != x)
-            v[i] = i;
-        else {
-            
-        }
+    for (int i = 2; i < n; i++){  
+        v[i] = i;
     }
-    
-    
+
+    for (int i = 2; i*i <= n/x; i++){  
+        while ((n/x) % i == 0){
+            v[x] = x*i;
+            x *= i;
+        }  
+    }
+
+    if (x < n)
+        v[x] = n;
+
+    for (int i = 1; i <= n; i++){
+        cout<<v[i]<<" ";
+    }   
 }
 
 int main()
