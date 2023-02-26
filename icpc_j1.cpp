@@ -18,25 +18,21 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vector <int> v(n);
+    ll n, k, sum = 0, mx = 0;
+    cin>>n>>k;
+
+    vector <ll> v(n);
     for (int i = 0; i < n; i++){
         cin>>v[i];
-    }
-    sort(v.begin(), v.end());
 
-    ll ans = v[0]-1;
-    v[0] = 1;
+        sum += v[i];
 
-    for (int i = 1; i < n; i++){
-        if (v[i] > v[i-1]){
-            ans += (v[i]-v[i-1]-1);
-            v[i] = v[i-1]+1;
-        }
+        mx = max(mx, v[i]);
     }
     
-    cout<<ans;
+    sum = sum+((k-1)*mx);
+
+    cout<<sum;
 }
 
 int main()
@@ -45,7 +41,8 @@ int main()
 
     int t = 1;
     cin>>t;
-    while (t--){
+    for (int i = 1; i <= t; i++){
+        cout<<"Case "<<i<<": ";
         solve();
         cout<<"\n";
     }

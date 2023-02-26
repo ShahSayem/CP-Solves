@@ -18,25 +18,36 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n;
+    int n, cnt1 = 0, cnt2 = 0, sum = 0;
     cin>>n;
     vector <int> v(n);
     for (int i = 0; i < n; i++){
         cin>>v[i];
+
+        if (v[i] == 1)
+            cnt1++;
+        else 
+            cnt2++;
     }
-    sort(v.begin(), v.end());
 
-    ll ans = v[0]-1;
-    v[0] = 1;
+    if (cnt2%2){
+        cout<<-1;
+        return;
+    }
 
-    for (int i = 1; i < n; i++){
-        if (v[i] > v[i-1]){
-            ans += (v[i]-v[i-1]-1);
-            v[i] = v[i-1]+1;
+    int cnt22 = cnt2;
+    for (int i = 0; i < n; i++){
+        if (v[i] == 2){
+            cnt2--;
+        }
+
+        if (cnt2 == (cnt22/2)){
+            cout<<i+1;
+            return;
         }
     }
     
-    cout<<ans;
+    cout<<-1;
 }
 
 int main()

@@ -20,23 +20,18 @@ void solve()
 {
     int n;
     cin>>n;
-    vector <int> v(n);
-    for (int i = 0; i < n; i++){
-        cin>>v[i];
-    }
-    sort(v.begin(), v.end());
 
-    ll ans = v[0]-1;
-    v[0] = 1;
+    string x = to_string(n);
+    int sz = x.size();
+    for (int i = 0; i < x.size(); i++){
+        if (((x[i]-'0')%2 == 0 || x.size() == 1) || x[sz-1] != '9'){
+            cout<<n/2<<" "<<((n/2)+(n%2));
 
-    for (int i = 1; i < n; i++){
-        if (v[i] > v[i-1]){
-            ans += (v[i]-v[i-1]-1);
-            v[i] = v[i-1]+1;
+            return;
         }
     }
     
-    cout<<ans;
+    cout<<(n/2)+5<<" "<<((n/2)+(n%2))-5;
 }
 
 int main()

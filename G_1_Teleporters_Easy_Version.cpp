@@ -18,25 +18,30 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n;
-    cin>>n;
+    int n, coin, cnt = 0;
+    cin>>n>>coin;
+
     vector <int> v(n);
     for (int i = 0; i < n; i++){
         cin>>v[i];
     }
-    sort(v.begin(), v.end());
 
-    ll ans = v[0]-1;
-    v[0] = 1;
-
-    for (int i = 1; i < n; i++){
-        if (v[i] > v[i-1]){
-            ans += (v[i]-v[i-1]-1);
-            v[i] = v[i-1]+1;
+    for (int i = 0; i < n; i++){
+        if (i && v[i] <= coin && v[i]){
+            coin -= v[i];
+            v[i] = 0;
+            i = 0;
+            cnt++;
+        }
+        else if (coin == 0){
+            break;
+        }
+        else {
+            coin--;
         }
     }
     
-    cout<<ans;
+    cout<<cnt;
 }
 
 int main()

@@ -18,25 +18,13 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vector <int> v(n);
-    for (int i = 0; i < n; i++){
-        cin>>v[i];
-    }
-    sort(v.begin(), v.end());
+    int m, n, k;
+    cin>>m>>n>>k;
 
-    ll ans = v[0]-1;
-    v[0] = 1;
-
-    for (int i = 1; i < n; i++){
-        if (v[i] > v[i-1]){
-            ans += (v[i]-v[i-1]-1);
-            v[i] = v[i-1]+1;
-        }
-    }
-    
-    cout<<ans;
+    if (n*k > m)
+        cout<<"No";
+    else 
+        cout<<"Yes";
 }
 
 int main()
@@ -45,7 +33,8 @@ int main()
 
     int t = 1;
     cin>>t;
-    while (t--){
+    for (int i = 1; i <= t; i++){
+        cout<<"Case "<<i<<": ";
         solve();
         cout<<"\n";
     }

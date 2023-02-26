@@ -7,9 +7,11 @@ typedef long long ll;
 
 const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
-const int MAX = 10000000;
+const int MAX = 10000000+5;
 
 //int dp[MAX];
+//int arr[MAX];
+//int tree[4*MAX+1];
 
 ///.........Graph.........///
 //vector <int> adj[MAX];
@@ -18,25 +20,28 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n;
+    int n , x, y = MAX, cnt = 0;
     cin>>n;
+
     vector <int> v(n);
     for (int i = 0; i < n; i++){
         cin>>v[i];
     }
+
     sort(v.begin(), v.end());
-
-    ll ans = v[0]-1;
-    v[0] = 1;
-
-    for (int i = 1; i < n; i++){
-        if (v[i] > v[i-1]){
-            ans += (v[i]-v[i-1]-1);
-            v[i] = v[i-1]+1;
+    x = v[0];
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++){
+            if (i != j){
+                y = min(y, __gcd(v[i], v[j]));
+            }
         }
     }
     
-    cout<<ans;
+    if (y > 2)
+        cout<<"No";
+    else
+        cout<<"Yes";
 }
 
 int main()

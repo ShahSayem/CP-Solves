@@ -18,19 +18,29 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int q, d, x;
+    int q, d, x, sum;
     cin>>q>>d;
 
-    string s;
     while (q--){
         cin>>x;
         
-        while (){
-            
+        if (x >= d*10){
+            cout<<"YES\n";
+            continue;
+        }
+
+        sum = d;
+        while ((x-sum)%10 && (sum < x)){
+            sum += d;
         }
         
-    }
-    
+        if (sum > x){
+            cout<<"NO\n";
+        }
+        else {
+            cout<<"YES\n";
+        }
+    }  
 }
 
 int main()

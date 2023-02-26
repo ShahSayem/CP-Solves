@@ -18,33 +18,31 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n;
+    int n, cnt = 0;
     cin>>n;
+
     vector <int> v(n);
-    for (int i = 0; i < n; i++){
-        cin>>v[i];
-    }
-
-    for (int i = 0; i < n-1; i++){
-        if ((v[i]+v[i+1]) < ((-1*v[i])+(-1*v[i+1]))){
-            v[i] *= -1;
-            v[i+1] *= -1;
-        }
-    }
-
-    for (int i = n-1; i > 0; i--){
-        if ((v[i]+v[i-1]) < ((-1*v[i])+(-1*v[i-1]))){
-            v[i] *= -1;
-            v[i-1] *= -1;
-        }
-    }
-    
     ll sum = 0;
     for (int i = 0; i < n; i++){
-        sum += v[i];
+        cin>>v[i];
+
+        sum += abs(v[i]);
+        if (v[i] < 0){
+            cnt++;
+        }
     }
 
-    cout<<sum;
+    int mn = INT_MAX;
+    if (cnt%2){
+        for (int i = 0; i < n; i++){
+            mn = min(abs(v[i]), mn);
+        }
+    }
+    else {
+        mn = 0;
+    }
+
+    cout<<sum-(2*mn);
 }
 
 int main()
