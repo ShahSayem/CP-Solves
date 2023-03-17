@@ -3,82 +3,58 @@
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-typedef long long ll;
+typedef long long ll; 
+const int MAX = 100000;
 
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 10000000+5;
-
-//int dp[MAX];
 int arr[MAX];
-struct Tree
+int tree[4*MAX+1];
+
+int query(int node, int b, int e, int i, int j, int total)
 {
-    ll sum, prop;
-} tree[4*MAX];
-
-///.........Graph.........///
-//vector <int> adj[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
-
-
-void init(int node, int b, int e)
-{
-    if (b == e){
-        tree[node].sum = arr[b];
-        return;
-    }
-
-    int left = node * 2 + 1;
-    int right = node * 2 + 2;
-    int mid = (b + e) / 2;
-
-    init(left, b, mid);
-    init(right, mid + 1, e);
-    tree[node].sum = tree[left].sum + tree[right].sum;
-}
-
-int query(int node, int b, int e, int i, int j, int carry = 0)
-{
-    if (i > e || j < b){
+    if (b > j || e < i){
         return 0;
     }
 
-    if (b >= i && e <= j){
-        return tree[node].sum + ((e - b + 1) * carry);
+    if (b == i && e == j){
+        total += tree[node];
+        //cout<<"total 1 "<<total<<"\n";
+        return total;
     }
 
-    int left = node * 2 + 1;
-    int right = node * 2 + 2;
-    int mid = (b + e) / 2;
+    total += tree[node];
 
-    int leftSum = query(left, b, mid, i, j, carry + tree[node].prop);
-    int rightSum = query(right, mid + 1, e, i, j, carry + tree[node].prop);
-    
-    return leftSum + rightSum;
+    int left = node*2 + 1;
+    int right = node*2 + 2;
+    int mid = (b+e)/2;
+
+    if (b <= i && mid >= j)
+        total = query(left, b, mid, i, j, total);
+    else
+        total = query(right, mid+1, e, i, j, total);
+
+    //cout<<"total2 "<<total<<"\n";
+    return total;
 }
 
-void update(int node, int b, int e, int i, int j)
-{
-    if (i > e || j < b)
+void update (int node, int b, int e, int i, int j)
+{   
+     if (i > e || j < b)
         return;
 
+    
     if (b >= i && e <= j){
-        tree[node].sum += (e - b + 1);
-        tree[node].prop++;
+        tree[node]++; 
 
         return;
     }
 
-    int left = node * 2 + 1;
-    int right = node * 2 + 2;
-    int mid = (b + e) / 2;
+    int left = node*2 + 1;
+    int right = node*2 + 2;
+    int mid = (b+e)/2;
 
     update(left, b, mid, i, j);
-    update(right, mid + 1, e, i, j);
-    tree[node].sum = tree[left].sum + tree[right].sum + (e - b + 1)*tree[node].prop;
+    update(right, mid+1, e, i, j);
 }
-
 
 void solve()
 {
@@ -89,10 +65,8 @@ void solve()
     for (int i = 0; i < n; i++){
         arr[i] = s[i]-'0';
     }
-
-    init(0, 0, n-1);
     
-    int q, i, j;
+    int q, i, j, x;
     cin>>q;
 
     char ch;
@@ -108,7 +82,14 @@ void solve()
         else {
             cin>>i;
             i--;
-            cout<<arr[i]<<"\n";
+            x = query(0, 0, n-1, i, i, 0);
+
+            if (x%2){
+                cout<<!arr[i]<<"\n";
+            }
+            else {
+                cout<<arr[i]<<"\n";
+            }
         }
     }  
 }
@@ -120,8 +101,10 @@ int main()
     int t = 1;
     cin>>t;
     for (int i = 1; i <= t; i++){
-        cout<<"Case "<<i<<": ";
+        cout<<"Case "<<i<<":\n";
         solve();
+
+        memset(tree, 0, sizeof(tree));
     }
 
     return 0;
