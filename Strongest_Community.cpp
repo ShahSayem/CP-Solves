@@ -47,11 +47,12 @@ ll query(int node, int b, int e, int i, int j)
     return max(leftMX, rightMX);
 }
 
-
-void solve (int n, int q)
+void solve()
 {
-    int idx;
-    map <int, int> mp; 
+    int n, c, q, idx;
+    cin>>n>>c>>q;
+
+    map <int, int> mp;
     for (int i = 0; i < n; i++){
         cin>>arr[i];
 
@@ -78,36 +79,36 @@ void solve (int n, int q)
     }
     
     init(0, 0, n-1);
-
-    int l, r, x, y, segAns;
+    
+    int i, j, x, y, segAns;
     while (q--){
-        cin>>l>>r;
-        l--, r--;
+        cin>>i>>j;
+        i--, j--;
 
-        if (arr[l] == arr[r]){
-            cout<<r-l+1<<"\n";
+        if (arr[i] == arr[j]){
+            cout<<j-i+1<<"\n";
             continue;
         }
 
-        x = lOcc[l]-l+1;
-        y = r-fOcc[r]+1;
-        segAns = query(0, 0, n-1, lOcc[l]+1, fOcc[r]-1);
+        x = lOcc[i]-i+1;
+        y = j-fOcc[j]+1;
+        segAns = query(0, 0, n-1, lOcc[i]+1, fOcc[j]-1);
 
         cout<<max({x, y, segAns})<<"\n";
     }
+    
 }
 
 int main()
 {
     Shah_Sayem
 
-    int n, q;
-    while (cin>>n){
-        if (n){
-            cin>>q;
-            solve(n, q);
-        }
+    int t = 1;
+    cin>>t;
+    for (int i = 1; i <= t; i++){
+        cout<<"Case "<<i<<":\n";
+        solve();
     }
-          
+
     return 0;
 }
