@@ -2,9 +2,12 @@
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-typedef long long ll;
 const int MAX = 100000+5;
-int cnt = 0;
+bool check[MAX];
+struct two
+{
+    int f, s;
+};
 
 class DisjointSet 
 {
@@ -14,7 +17,7 @@ public:
         rank.resize(MAX+1, 0); //1 base indexing
         parent.resize(MAX+1);
         sz.resize(MAX+1);
-        for (int i = 0; i <= MAX; i++){
+        for (int i = 0; i < MAX; i++){
             parent[i] = i;
             sz[i] = 1;
         } 
@@ -48,11 +51,9 @@ public:
         int ultParU = findUltPar(u);
         int ultParV = findUltPar(v);
 
-        if (ultParU == ultParV){
-            cnt++;
-
+        if (ultParU == ultParV)
             return; 
-        }
+
         if (sz[ultParU] < sz[ultParV]){
             parent[ultParU] = ultParV;
             sz[ultParV] += sz[ultParU];
@@ -67,40 +68,36 @@ public:
 int main()
 {
     Shah_Sayem
-
-    int n, m;
+    int n, m, x, y, cnt = 0;
+    vector <int> cycle, comp;
+    
     cin>>n>>m;
-
-    if (n != m){
-        cout<<"NO\n";
-        return 0;
-    }
-
     DisjointSet ds(n);
-    int x, y;
 
-    bool check[100];
-    for (int i = 0; i < m; i++){
+    for (int i = 1; i <= m; i++){
         cin>>x>>y;
 
-        // check[x] = 1, check[y] = 1;
-        ds.unionBySize(x, y);
-
-        if (cnt > 1){
-            cout<<"NO\n";
-            return 0;
-        }
+        if (ds.findUltPar(x) == ds.findUltPar(y))
+            cycle.push_back(ds.findUltPar(x));
+        else
+            ds.unionBySize(x, y); 
     }
 
-    for (int i = 0; i < m; i++){
-        if (ds.findUltPar(x) != ds.findUltPar(y)){
-            cout<<"NO\n";
-            return 0;
-        }
+    for (auto it : cycle){
+        check[ds.findUltPar(it)] = 1;
     }
 
-    cout<<"FHTAGN!\n";
-    
+    for (int i = 1; i <= n; i++){
+        if (ds.findUltPar(i) == i)
+            comp.push_back(i);
+    }
+
+    for (auto it : comp){
+        if (!check[it])
+            cnt++;
+    }
+
+    cout<<cnt<<"\n";
+
     return 0;
 }
-

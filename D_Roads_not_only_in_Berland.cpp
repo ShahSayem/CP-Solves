@@ -2,10 +2,12 @@
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-typedef long long ll;
-const int MAX = 100000+5;
-int cnt = 0;
+const int MAX = 1000+5;
 
+struct two
+{
+    int f, s;
+};
 class DisjointSet 
 {
     vector <int> rank, parent, sz;
@@ -14,7 +16,7 @@ public:
         rank.resize(MAX+1, 0); //1 base indexing
         parent.resize(MAX+1);
         sz.resize(MAX+1);
-        for (int i = 0; i <= MAX; i++){
+        for (int i = 0; i < MAX; i++){
             parent[i] = i;
             sz[i] = 1;
         } 
@@ -48,11 +50,9 @@ public:
         int ultParU = findUltPar(u);
         int ultParV = findUltPar(v);
 
-        if (ultParU == ultParV){
-            cnt++;
-
+        if (ultParU == ultParV)
             return; 
-        }
+
         if (sz[ultParU] < sz[ultParV]){
             parent[ultParU] = ultParV;
             sz[ultParV] += sz[ultParU];
@@ -67,40 +67,39 @@ public:
 int main()
 {
     Shah_Sayem
-
-    int n, m;
-    cin>>n>>m;
-
-    if (n != m){
-        cout<<"NO\n";
-        return 0;
-    }
+    int n, a, b, cnt = 0;
+    cin>>n;
 
     DisjointSet ds(n);
-    int x, y;
 
-    bool check[100];
-    for (int i = 0; i < m; i++){
-        cin>>x>>y;
+    vector <two> v(n+1), cycle(n+1, {0, 0});
+    vector <int> comp;
+    for (int i = 0; i < (n-1); i++){
+        cin>>a>>b;
 
-        // check[x] = 1, check[y] = 1;
-        ds.unionBySize(x, y);
+        if (ds.findUltPar(a) != ds.findUltPar(b)){
+            ds.unionBySize(a, b);
+        }
+        else {
+            cnt++;
 
-        if (cnt > 1){
-            cout<<"NO\n";
-            return 0;
+            cycle[i].f = a;
+            cycle[i].s = b;
         }
     }
 
-    for (int i = 0; i < m; i++){
-        if (ds.findUltPar(x) != ds.findUltPar(y)){
-            cout<<"NO\n";
-            return 0;
+    cout<<cnt<<"\n";
+    for (int i = 0; i < n; i++){
+        for (int j = 1; j <= n ; j++){
+            if (cycle[i].f && (ds.findUltPar(cycle[i].f) != ds.findUltPar(j))){
+                cout<<cycle[i].f<<" "<<cycle[i].s<<" "<<cycle[i].f<<" "<<j<<"\n";
+
+                ds.unionBySize(ds.findUltPar(cycle[i].f), j);
+
+                break;
+            }
         }
     }
 
-    cout<<"FHTAGN!\n";
-    
     return 0;
 }
-

@@ -2,9 +2,7 @@
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-typedef long long ll;
-const int MAX = 100000+5;
-int cnt = 0;
+const int MAX = 1000+5;
 
 class DisjointSet 
 {
@@ -48,11 +46,9 @@ public:
         int ultParU = findUltPar(u);
         int ultParV = findUltPar(v);
 
-        if (ultParU == ultParV){
-            cnt++;
-
+        if (ultParU == ultParV)
             return; 
-        }
+
         if (sz[ultParU] < sz[ultParV]){
             parent[ultParU] = ultParV;
             sz[ultParV] += sz[ultParU];
@@ -67,40 +63,38 @@ public:
 int main()
 {
     Shah_Sayem
-
-    int n, m;
+    int n, m, cnt = 0, x;
     cin>>n>>m;
 
-    if (n != m){
-        cout<<"NO\n";
-        return 0;
-    }
-
     DisjointSet ds(n);
-    int x, y;
+    int NofLang[n];
+    vector <int> langIndividual[100];
+    for (int i = 0; i < n; i++){
+        cin>>NofLang[i];
 
-    bool check[100];
-    for (int i = 0; i < m; i++){
-        cin>>x>>y;
+        if (NofLang[i] == 0)
+            cnt++;
 
-        // check[x] = 1, check[y] = 1;
-        ds.unionBySize(x, y);
+        for (int j = 0; j < NofLang[i]; j++){
+            cin>>x;
+            langIndividual[i].push_back(x);
 
-        if (cnt > 1){
-            cout<<"NO\n";
-            return 0;
+            if (j)
+                ds.unionBySize(langIndividual[i][j], langIndividual[i][j-1]);
         }
     }
 
-    for (int i = 0; i < m; i++){
-        if (ds.findUltPar(x) != ds.findUltPar(y)){
-            cout<<"NO\n";
-            return 0;
-        }
+    set <int> st;
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < NofLang[i]; j++)
+            st.insert(ds.findUltPar(langIndividual[i][j]));
     }
-
-    cout<<"FHTAGN!\n";
     
+    if (!st.empty())
+        cnt += st.size()-1;
+
+    cout<<cnt<<"\n";
+
     return 0;
 }
 
