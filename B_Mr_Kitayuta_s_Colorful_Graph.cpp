@@ -9,7 +9,7 @@ class DisjointSet
 {
     vector <int> rank, parent, sz;
 public:
-    DisjointSet(int n){
+    DisjointSet(){
         rank.resize(MAX+1, 0); //1 base indexing
         parent.resize(MAX+1);
         sz.resize(MAX+1);
@@ -64,22 +64,30 @@ public:
 int main()
 {
     Shah_Sayem
-    int n, m, x, y;
-    ll cnt = 1;
+    int n, m, a, b, c;
     cin>>n>>m;
 
-    DisjointSet ds(n);
+    vector <DisjointSet> color(105);
 
     for (int i = 1; i <= m; i++){
-        cin>>x>>y;
+        cin>>a>>b>>c;
 
-        if (ds.findUltPar(x) != ds.findUltPar(y)){
-            ds.unionBySize(x, y);
-            cnt *= 2;
-        }
+        color[c].unionBySize(a, b);
     }
     
-    cout<<cnt<<"\n";
+    int q, u, v, cnt;
+    cin>>q;
+    while (q--){
+        cnt = 0;
+        cin>>u>>v;
+
+        for (int i = 1; i <= 100; i++){
+            if (color[i].findUltPar(u) == color[i].findUltPar(v))
+                cnt++;
+        }
+
+        cout<<cnt<<"\n";
+    }
 
     return 0;
 }

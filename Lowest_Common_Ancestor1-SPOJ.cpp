@@ -1,88 +1,90 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//By Errichto
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-typedef long long ll;
-
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 10000+5;
-
-struct FS
-{
-    bool one, two;
-};
-
-vector <int> adj[MAX];
-const int LOG = 14;
-int up[MAX][LOG];
+const int MAX = 1005;
+const int LOG = 17;
+vector <int> children[MAX];
+int parent[MAX][LOG];
 int depth[MAX];
-vector <FS> vis(MAX);
-int ans = -1;
-void dfs1(int node)
+
+void dfs(int a, int p)
 {
-    if (vis[node].two){
-        ans = node;
-        return;
+    depth[a] = depth[p]+1;
+    parent[a][0] = p;
+    for(int i = 1; i < LOG; i++){
+        parent[a][i] = parent[ parent[a][i-1] ][i-1];
     }
 
-    vis[node].one = 1;
-    for (auto child: adj[node]){
-        if (!vis[child].one)
-            dfs1(child);
+    for (int b: children[a]){
+        if (b != p)
+            dfs(b, a);
     }
 }
 
-void dfs2(int node)
-{
-    if (vis[node].one){
-        ans = node;
-        return;
-    }
-    vis[node].two = 1;
-    for (auto child: adj[node]){
-        if (!vis[child].two)
-            dfs2(child);
-    }
-}
-
-int getLCA(int a, int b)
+int getLCA(int a, int b) //O(log(N))
 {
     if (depth[a] < depth[b]){
         swap(a, b);
     }
 
-    while (depth[a] > depth[b]){
-        a = up[a][0];
+    int d = depth[a] - depth[b];
+    for(int i = LOG-1; i >= 0 ; i--){
+        if (depth[parent[a][i]] >= depth[b])
+            a = parent[a][i];
+    }
+    
+    if (a == b)
+        return a;
+
+    for(int i = LOG-1; i >= 0 ; i--){
+        if (parent[a][i] != parent[b][i]){
+            a = parent[a][i];
+            b = parent[b][i];
+        }
     }
 
-    while (a != b){
-        a = up[a][0];
-        b = up[b][0];
-    }
-    
-    dfs1(a);
-    dfs2(b);
+    return parent[a][0];   //Here, parent[a][0] = parent[b][0]
 }
+
+
 void solve()
 {
-    int n;
+    int n, m, v;
     cin>>n;
-    for (int i = 0; i < n; i++){
-        
+    for (int i = 1; i <= n; i++){
+        cin>>m;
+        while (m--){
+            cin>>v;
+            children[i].push_back(v);
+            children[v].push_back(i);
+        } 
     }
-    
+    dfs(1, -1);
+
+    int q, a, b;
+    cin>>q;
+    while (q--){
+        cin>>a>>b;
+
+        cout<<getLCA(a, b)<<"\n";
+    } 
 }
 
 int main()
 {
     Shah_Sayem
 
-    int t = 1;
-    //cin>>t;
-    while (t--){
+    int tc = 1;
+    cin>>tc;
+    for (int i = 1; i <= tc; i++){
+        cout<<"Case "<<i<<":\n";
         solve();
-        cout<<"\n";
+
+        memset(children, 0, sizeof(children));
+        memset(parent, 0, sizeof(parent));
+        memset(depth, 0, sizeof(depth));
     }
 
     return 0;

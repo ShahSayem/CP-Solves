@@ -1,65 +1,68 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//By Errichto
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-const int MAX = 10000;
-const int LOG = 14;
+const int MAX = 1000005;
+const int LOG = 17;
 vector <int> children[MAX];
-int up[MAX][LOG];
+int parent[MAX][LOG];
 int depth[MAX];
 
-void dfs(int a)
+void dfs(int a, int p)
 {
+    depth[a] = depth[p]+1;
+    parent[a][0] = p;
+    for(int i = 1; i < LOG; i++){
+        parent[a][i] = parent[ parent[a][i-1] ][i-1];
+    }
+
     for (int b: children[a]){
-        depth[b] = depth[a] + 1;
-        up[b][0] = a;
-        for(int j = 1; j < LOG; j++){
-            up[b][j] = up[ up[b][j-1] ][j-1];
-        }
-            
-        dfs(b);
+        if (b != p)
+            dfs(b, a);
     }
 }
 
-int getLCA(int a, int b)
+int getLCA(int a, int b) //O(log(N))
 {
     if (depth[a] < depth[b]){
         swap(a, b);
     }
 
-    int k = depth[a] - depth[b];
-    for(int j = LOG-1; j >= 0 ; j--){
-        if (k & (1 << j))
-            a = up[a][j];
+    int d = depth[a] - depth[b];
+    for(int i = LOG-1; i >= 0 ; i--){
+        if (depth[parent[a][i]] >= depth[b])
+            a = parent[a][i];
     }
     
     if (a == b)
         return a;
 
-    for(int j = LOG-1; j >= 0 ; j--){
-        if (up[a][j] != up[b][j]){
-            a = up[a][j];
-            b = up[b][j];
+    for(int i = LOG-1; i >= 0 ; i--){
+        if (parent[a][i] != parent[b][i]){
+            a = parent[a][i];
+            b = parent[b][i];
         }
     }
 
-    return up[a][0];   //Here, up[a][0] = up[b][0]
+    return parent[a][0];   //Here, parent[a][0] = parent[b][0]
 }
 
 int main()
 {
     Shah_Sayem
 
-    int n, cnt, c;
+    int n, m, v;
     cin>>n;
-    for (int v = 0; v < n; v++){
-        cin>>cnt;
-        for (int i = 0; i < cnt; i++){
-            cin>>c;
-            children[v].push_back(c);
+    for (int i = 0; i < n; i++){
+        cin>>m;
+        while (m--){
+            cin>>v;
+            children[i].push_back(v);
+            children[v].push_back(i);
         } 
     }
-    dfs(0);
+    dfs(0, -1);
 
     int q, a, b;
     cin>>q;
