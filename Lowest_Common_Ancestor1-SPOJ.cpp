@@ -4,22 +4,22 @@ using namespace std;
 //By Errichto
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 const int MAX = 1005;
-const int LOG = 17;
-vector <int> children[MAX];
-int parent[MAX][LOG];
+int LOG;
+vector <int> adj[MAX];
+int parent[MAX][21];
 int depth[MAX];
 
-void dfs(int a, int p)
+void dfs(int node, int p)
 {
-    depth[a] = depth[p]+1;
-    parent[a][0] = p;
+    depth[node] = depth[p]+1;
+    parent[node][0] = p;
     for(int i = 1; i < LOG; i++){
-        parent[a][i] = parent[ parent[a][i-1] ][i-1];
+        parent[node][i] = parent[ parent[node][i-1] ][i-1];
     }
-
-    for (int b: children[a]){
-        if (b != p)
-            dfs(b, a);
+ 
+    for (int child: adj[node]){
+        if (child != p)
+            dfs(child, node);
     }
 }
 
@@ -53,15 +53,19 @@ void solve()
 {
     int n, m, v;
     cin>>n;
+    
+    while((1 << LOG) <= n)
+        LOG++;
+
     for (int i = 1; i <= n; i++){
         cin>>m;
         while (m--){
             cin>>v;
-            children[i].push_back(v);
-            children[v].push_back(i);
+            adj[i].push_back(v);
+            adj[v].push_back(i);
         } 
     }
-    dfs(1, -1);
+    dfs(1, 0);
 
     int q, a, b;
     cin>>q;
@@ -82,7 +86,7 @@ int main()
         cout<<"Case "<<i<<":\n";
         solve();
 
-        memset(children, 0, sizeof(children));
+        memset(adj, 0, sizeof(adj));
         memset(parent, 0, sizeof(parent));
         memset(depth, 0, sizeof(depth));
     }

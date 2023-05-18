@@ -2,63 +2,51 @@
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define error(x)        cerr << #x << " = " << (x) <<"\n";
-#define Error(a,b)      cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
-typedef long long ll;
-
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 1000000+5;
-
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
+const int MAX = 1000+5;
 
 ///.........Graph.........///
-vector <int> adj[MAX];
-vector <int> travers;
-bool vis[1000000] = {0};
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
+int n, m, ansCurr;
+int arr[MAX][MAX];
+bool vis[MAX][MAX];
 
-void dfs(int node)
+void dfs(int x, int y)
 {
-    vis[node] = 1;
-    travers.push_back(node);
-    for (auto child: adj[node]){
-        if (!vis[child])
-            dfs(child);
-    }
+    if (!arr[x][y] || vis[x][y])
+        return;
+
+    ansCurr += arr[x][y];
+    vis[x][y] = 1;
+
+    if (x+1 < n)
+        dfs(x+1, y);
+    if (y+1 < m)
+        dfs(x, y+1);
+    if (x > 0)
+        dfs(x-1, y);
+    if (y > 0)
+        dfs(x, y-1);
 }
 
 void solve()
 {
-    int n, m, k = n*m+1;
     cin>>n>>m;
 
-    int arr[n][m];
-    //vector <DisjointSet> lake((n*m)+1009);
-    DisjointSet ds(n);
-    // memset(arr, 0, sizeof(arr));
     for (int i = 0; i < n; i++){
         for (int j = 0; j < m; j++){
             cin>>arr[i][j];
         }
     }
+    int ans = 0;
 
-    int x = 1;
-    vector <int> v(n*m+10);
     for (int i = 0; i < n; i++){
         for (int j = 0; j < m; j++){
+            ansCurr = 0;
+            dfs(i, j);
+            ans = max(ans, ansCurr);
         }
     }
     
-    int mx = 0;
-    for (auto it : v){
-       mx = max(it, mx);
-    }
-    
-    cout<<mx;
+    cout<<ans;
 }
 
 int main()
@@ -70,6 +58,9 @@ int main()
     while (tc--){
         solve();
         cout<<"\n";
+
+        memset(arr, 0, sizeof(arr));
+        memset(vis, 0, sizeof(vis));
     }
 
     return 0;
