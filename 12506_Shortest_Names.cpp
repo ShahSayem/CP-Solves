@@ -1,8 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
+typedef long long ll;
+
 struct node {
-    node *next[27];
+    node *next[26];
     int cnt;
     bool completeWord;
 
@@ -27,25 +30,26 @@ void trieInsert(string &s)
         }
 
         cur = cur->next[x];
+        cur->cnt++;
     }
     cur->completeWord = true;
 }
 
-bool trieSearch(string &s)
+int trieSearch(string &s)
 {
     node *cur = root;
-    int n = s.size(), x;
+    int n = s.size(), x, pref = 0;
     for (int i = 0; i < n; i++){
         x = s[i]-'a';
 
-        if (cur->next[x] == NULL){
-            return false;
-        }
-
         cur = cur->next[x];
+        pref++;
+        
+        if (cur->cnt == 1)
+            return pref;
     }
 
-    return cur->completeWord;
+    return pref;
 }
 
 void trieDel(node* cur)
@@ -61,36 +65,34 @@ void solve()
 {
     int n;
     cin>>n;
-    string word;
-    while (n--){
-        cin>>word;
 
-        trieInsert(word);
-    }
-    
-    int q;
-    cin>>q;
-    while (q--){
-        cin>>word;
+    vector <string> v(n);
+    for (int i = 0; i < n; i++){
+        cin>>v[i];
 
-        if (trieSearch(word))
-            cout<<"YES\n";
-        else 
-            cout<<"NO\n";
+        trieInsert(v[i]);
     }
+
+    ll ans = 0;
+    for (int i = 0; i < n; i++){
+        ans += trieSearch(v[i]);
+    }
+    cout<<ans;
 }
 
 int main()
 {
-    int t;
-    cin>>t;
+    Shah_Sayem
 
-    while (t--){
+    int tc = 1;
+    cin>>tc;
+    while (tc--){
         root = new node();
         solve();
+        cout<<"\n";
 
         trieDel(root);
-    }  
+    }
 
     return 0;
 }

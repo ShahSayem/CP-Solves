@@ -5,14 +5,14 @@ using namespace std;
 bool check;
 
 struct node {
-    node *next[27];
+    node *next[10];
     int cnt;
     bool completeWord;
 
     node (){
         cnt = 0;
         completeWord = false;
-        for (int i = 0; i < 26; i++){
+        for (int i = 0; i < 10; i++){
             next[i] = NULL;
         }
     }
@@ -21,25 +21,31 @@ struct node {
 void trieInsert(string &s)
 {
     node *cur = root;
-    for (int i = 0; i < s.size(); i++){
-        int x = s[i]-'a';
-
-        if (cur->completeWord == true){
-            check = 1;
-        }
+    int n = s.size(), x;
+    for (int i = 0; i < n; i++){
+        x = s[i]-'0';
 
         if (cur->next[x] == NULL){
             cur->next[x] = new node ();
         }
 
         cur = cur->next[x];
+        if (cur->completeWord == true){
+            check = 1;
+        }
     }
     cur->completeWord = true;
+
+    for (int i = 0; i < 10; i++){
+        if (cur->next[i]){
+            check = 1;
+        }
+    }
 }
 
 void trieDel(node* cur)
 {
-    for (int i = 0; i < 26; i++)
+    for (int i = 0; i < 10; i++)
         if (cur->next[i])
             trieDel(cur->next[i]);
 
@@ -54,16 +60,15 @@ void solve()
     string s;
     while (n--){
         cin>>s;
-        trieInsert(s);
 
-        if (check){
-            cout<<"NO";
-
-            return;
-        }    
+        if (!check)
+            trieInsert(s);   
     }
     
-    cout<<"YES";
+    if (check)
+        cout<<"NO";
+    else
+        cout<<"YES";
 }
 
 int main()
