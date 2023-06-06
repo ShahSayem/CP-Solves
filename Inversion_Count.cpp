@@ -8,19 +8,51 @@ using namespace __gnu_pbds;
 template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define error(x)        cerr << #x << " = " << (x) <<"\n";
-#define Error(a,b)      cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
 typedef long long ll;
-
-const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
-const int MAX = 200000+5;
+const int MAX = 10000000+5;
 
+int arr[MAX];   //Good to use 1 base inedxing
+ll bit1[MAX];
+ll bit2[MAX];
+int n;
+
+ll query(int idx)
+{
+    ll sum = 0;
+    while (idx > 0){
+        sum += bit1[idx];
+        idx -= (idx & -idx);
+    }
+    
+    return sum;
+}
+
+void update(int idx, ll val)
+{
+    while (idx < MAX){
+        bit1[idx] += val;
+        idx += (idx & -idx);
+    }
+}
 
 
 void solve()
 {
+    cin>>n;
+    
+    int x, y, cnt = 0;
+    for (int i = 1; i <= n; i++){
+        cin>>arr[i];
 
+        x = query(MAX-2);
+        y = query(arr[i]);
+
+        cnt += (x-y);
+        update(arr[i], 1);
+    }
+
+    cout<<cnt;
 }
 
 int main()
@@ -30,9 +62,11 @@ int main()
     int tc = 1;
     cin>>tc;
     for (int i = 1; i <= tc; i++){
-        cout<<"Case "<<i<<": ";
         solve();
         cout<<"\n";
+
+        memset(bit1, 0, sizeof(bit1));
+        memset(bit2, 0, sizeof(bit2));
     }
 
     return 0;

@@ -1,23 +1,24 @@
 #include <bits/stdc++.h>
-#include <iostream>
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 typedef long long ll;
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 10000000+5;
-
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
-
-///.........Graph.........///
-//vector <int> adj[MAX];
 
 void solve()
 {
+    int n, k, cnt = 2, ans = 0;
+    cin>>n>>k;
+
+    for (int i = 1; i <= n/2; i++){
+        if (i%k == 0)
+            cnt++;
+
+        ans = max({cnt, ans});
+    }
     
+    // cout<<ans;
+
+    cout<<(n/k) + n%k;
 }
 
 int main()
