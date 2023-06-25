@@ -1,34 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#include <ext/pb_ds/detail/standard_policies.hpp>
-using namespace __gnu_pbds;
-template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define error(x)        cerr << #x << " = " << (x) <<"\n";
-#define Error(a,b)      cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
-typedef long long ll;
 
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 10000000+5;
+int n, k, cnt;
 
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
+void permutation(int l, string str)
+{
+    if (cnt == k)
+        return;
 
-///.........Graph.........///
-//vector <int> adj[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
+    if (l == n-1){
+        // cout<<"Final: ";
+        cout<<str<<"\n";
+        cnt++;
+        return;
+    }
+
+    for (int i = l; i < n; i++){
+        swap(str[l], str[i]);
+        // cout<<"swap: "<<i<<" "<<l<<": "<<str<<" ";
+        permutation(l+1, str);
+    }
+}
 
 void solve()
 {
-    int n, k;
+    cnt = 0;
+    string s = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     cin>>n>>k;
+
+    string str = s.substr(0, n);
+    permutation(0, str);
 }
 
 int main()
@@ -40,7 +42,6 @@ int main()
     for (int i = 1; i <= tc; i++){
         cout<<"Case "<<i<<":\n";
         solve();
-        cout<<"\n";
     }
 
     return 0;
