@@ -49,14 +49,10 @@ ll getHash(int l, int r, vector <ll> &h, vector <ll> &power) // hash(s[l...r]) -
 
 int main()
 {   
-    Shah_Sayem
+    // Shah_Sayem
 
     string s, rs;
-    int tc;
-    cin>>tc;
-
-    while (tc--){
-        cin>>s;
+    while (cin>>s){
         int n;
         rs = s;
         reverse(rs.begin(), rs.end());
@@ -66,30 +62,20 @@ int main()
         auto rsh = generatePrefixHash(rs);
         auto power = generateExponents(n);
 
-        int l1, l2, r1, r2,  lastIdx = 0;
-        bool check = 0;
-        for (int i = 1, j = 0; i < n; i++){
-            check = 0;
-            l1 = 0;
-            r1 = i;
-            for (; j < n-i; j++){
-                l2 = j;
-                r2 = j+i;
-                if (getHash(l1, r1, sh, power) == getHash(l2, r2, rsh, power)){
-                    lastIdx++;
-                    check = 1;
-                    break;
-                }
-            }
-
-            if (!check)
+        string ans = s;
+        int l1, l2, r1, r2, p = -1;
+        for (int i = 0; i < n; i++){
+            l1 = i;
+            r1 = n-1;
+            r2 = n-1-l1;
+            l2 = 0;
+            if (getHash(l1, r1, sh, power) == getHash(l2, r2, rsh, power)){
+                ans += rs.substr(r2+1);
                 break;
+            }
         }
 
-        for (int i = lastIdx; i >= 0; i--){
-            cout<<s[i];
-        }
-        cout<<"\n";
+        cout<<ans<<"\n";
     }
 
     return 0;

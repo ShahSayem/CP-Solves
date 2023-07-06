@@ -9,6 +9,13 @@ const int MOD = 1000000007;
 
 //From Sadman Sakib Vai, DevSkill B13
 
+struct two
+{
+    int f, s;
+};
+
+vector <ll> sh, power;
+
 vector <ll> generateExponents(int n)
 {
     vector <ll> power(n+1, 1);
@@ -39,7 +46,7 @@ ll generateHash(string &s)
     return H;
 }
 
-ll getHash(int l, int r, vector <ll> &h, vector <ll> &power) // hash(s[l...r]) --> s = "aabccd" --> getHash(0, 3) = HashOf(aabc)
+ll getHash(int l, int r, vector <ll> &h) // hash(s[l...r]) --> s = "aabccd" --> getHash(0, 3) = HashOf(aabc)
 {
     if (l == 0)
         return h[r];
@@ -51,46 +58,46 @@ int main()
 {   
     Shah_Sayem
 
-    string s, rs;
-    int tc;
-    cin>>tc;
+    string s;
+    cin>>s;
+    int n;
+    n = s.size();
 
-    while (tc--){
-        cin>>s;
-        int n;
-        rs = s;
-        reverse(rs.begin(), rs.end());
-        n = s.size();
+    sh = generatePrefixHash(s);
+    power = generateExponents(n);
 
-        auto sh = generatePrefixHash(s);
-        auto rsh = generatePrefixHash(rs);
-        auto power = generateExponents(n);
-
-        int l1, l2, r1, r2,  lastIdx = 0;
-        bool check = 0;
-        for (int i = 1, j = 0; i < n; i++){
-            check = 0;
-            l1 = 0;
-            r1 = i;
-            for (; j < n-i; j++){
-                l2 = j;
-                r2 = j+i;
-                if (getHash(l1, r1, sh, power) == getHash(l2, r2, rsh, power)){
-                    lastIdx++;
-                    check = 1;
-                    break;
-                }
-            }
-
-            if (!check)
-                break;
+    vector <two> v;
+    bool check = 0;
+    int temp;
+    for (int i = 0, j = n-1; i < n-1; i++, j--){
+        if (getHash(0, i, sh) == getHash(j, n-1, sh)){
+            temp = getHash(0, i, sh);
+            v.push_back({temp, i+1});
         }
-
-        for (int i = lastIdx; i >= 0; i--){
-            cout<<s[i];
-        }
-        cout<<"\n";
     }
+
+    if (v.empty()){
+        cout<<"Just a legend\n";
+
+        return 0;
+    }
+
+    string ans;
+    for (int i = v.size()-1; i >= 0 && !check; i--){
+        for (int j = 1; j < n-v[i].s; j++){
+            if (v[i].f == getHash(j, j+v[i].s-1, sh)){
+                ans = s.substr(j, v[i].s);
+
+                check = 1;
+                break;
+            }
+        }
+    }
+
+    if (check)
+        cout<<ans<<"\n";
+    else 
+        cout<<"Just a legend\n";
 
     return 0;
 } 

@@ -2,39 +2,55 @@
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-typedef long long ll;
+int n, m, q;
 
-struct two
-{
+struct two{
     int f, s;
 };
 
-void solve()
+vector <int> query;
+vector <two> seg;
+
+bool isBeautiful(int mid)
 {
-    int n, m, l, r;
-    cin>>n>>m;
-
-    vector <int> v(n+1);
-    for (int i = 0; i <= n; i++){
-        v[i] = 0;
-    }
-
-    map <two, two> mp;
-    map <two, int> hashGen;
-    
-    while (m--){
-        cin>>l>>r;
-        mp[{l, r}] = {r-l+1, 0};    //cnt0, cnt1
-    }
-
-    int q, x;
-    cin>>q;
-    while (q--){
-        cin>>x;
-        v[x] = 1;
+    int change[n+1] = {0};
+    for (int i = 0; i < mid; i++){
+        change[query[i]] = 1;
     }
     
+    int preSum[n+1];
+    preSum[0] = 0;
+    for (int i = 1; i <= n; i++){
+        preSum[i] = preSum[i-1]+change[i];
+    }
+    
+    int cnt1, segSize;
+    for (int i = 0; i < m; i++){
+        cnt1 = preSum[seg[i].s]-preSum[seg[i].f-1];
+        segSize = seg[i].s-seg[i].f+1;
+                   
+        if (cnt1 > segSize/2)
+            return true;
+    }
+    return false;
 }
+
+int firstBeauty()  //return first occurance of True (lowest possible query)
+{ 
+    int l = 1, r = q, mid;    
+                             
+    while (l <= r){
+        mid = l+(r-l)/2;
+
+        if (!isBeautiful(mid))
+            l = mid+1;
+        else 
+            r = mid-1;
+    }
+
+    return l;
+}
+
 
 int main()
 {
@@ -43,8 +59,27 @@ int main()
     int tc = 1;
     cin>>tc;
     while (tc--){
-        solve();
-        cout<<"\n";
+        int l, r;
+        cin>>n>>m;
+
+        seg.clear();
+        for (int i = 0; i < m; i++){
+            cin>>l>>r;
+            seg.push_back({l, r});
+        }
+
+        cin>>q;
+        query.clear();
+        query.resize(q);
+        for (int i = 0; i < q; i++){
+            cin>>query[i];
+        }
+
+        int ans = firstBeauty();
+        if (ans > q)
+            cout<<-1<<"\n";
+        else
+            cout<<ans<<"\n";
     }
 
     return 0;
