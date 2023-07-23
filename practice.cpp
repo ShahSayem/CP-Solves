@@ -11,6 +11,7 @@ template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree
 #define error(x)        cerr << #x << " = " << (x) <<"\n";
 #define Error(a,b)      cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
 typedef long long ll;
+typedef __int128 lll;
 
 const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;

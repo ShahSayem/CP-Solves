@@ -10,56 +10,36 @@ void solve()
     cin>>a>>b;
 
     int n = a.size(), m = b.size();
-    int pos = n-m, temp, cnt = 0;
+    int temp, cnt = 0;
     ll ans = 0;
 
-    if (a == b){ // equals
-        ans = 0;
-    }
-    else if (n != m){   //not same size
-        if (m > n){
-            swap(a, b);
-            swap(n, m);
-        }
-        pos = n-m;
-
-        int i = pos, j = 0;
-        for (; j < m; i++, j++){
-            if (a[i] != b[j]){
-                pos = i;
-                break;
-            }
-        }
-
-        if (i != 0){
-            a[i] = '0';
-            b[j] = '9';
-        }
-        ans += abs(a[i]-b[j]);
-        for (int i = pos+1; i < n; i++){
-            ans += 9;
-        }
-
-        pos = n-m;
-        for (int i = 0; i < pos; i++){
-            temp = a[i]-'0';
-            ans += temp;
-        }
-    }
-    else {  //same size && not equal
-        for (int i = 0; i < n; i++){
-            if (a[i] != b[i]){
-                pos = i;
-                break;
-            }
-        }
-
-        ans += abs(a[pos]-b[pos]);
-        for (int i = pos+1; i < n; i++){
+    bool check = 0;
+    int pos = m-n, i;
+    for (i = 0; i < pos; i++){
+        if (!check){
+            ans += (b[i]-'0');
+            check = 1;
+        }    
+        else {
             ans += 9;
         }
     }
+    
+    int j = 0;
+    if (!check){
+        for (; i < m; i++, j++){
+            if (b[i] != a[j]){
+                break;
+            }
+        }
+    
+        if (n == m && i != n){
+            ans += abs(int(b[i]-'0') - int(a[j]-'0'));
+            i++, j++;
+        }
+    }
 
+    ans+= 1LL*((n-j)*9); 
     cout<<ans;
 }
 
