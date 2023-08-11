@@ -1,50 +1,51 @@
-#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
-
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-typedef long long ll;
-
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 10000000+5;
-
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
-
-///.........Graph.........///
-//vector <int> adj[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int a, b, c, d, x, y;
+    int a, b, c, d, x, y, ans = 0;
     cin>>a>>b>>c>>d;
 
-    if (d < b){
+    if (b > d){
         cout<<-1;
         return;
     }
 
-    if (a < c){
-        x = abs(c-a);
-        y = (abs((d-b)-x))*2;
-
-        if (y < 0){
-            cout<<-1;
-            return;
-        }
-
-        cout<<x+y;
+    if (b >= 0 && d >= 0){
+        y = d-b;
     }
-    else if (a > c){
-
+    else if (b < 0 && d < 0){
+        y = abs(abs(d) - abs(b));
     }
     else {
-
+        y = abs(b)+d;
     }
+
+    ans += y;
+
+    a += y;
+    b += y;
+
+    if (b != d || a < c){
+        // cout<<b<<" "<<d<<" "<<a<<" "<<c<<"\n";
+        cout<<-1;
+        return;
+    }
+
+    if (a >= 0 && c >= 0){
+        x = a-c;
+    }
+    else if (a < 0 && c < 0){
+        x = abs(abs(a) - abs(c));
+    }
+    else {
+        x = a+abs(c);
+    }
+
+    ans += x;
+
+    cout<<ans;
 }
 
 int main()

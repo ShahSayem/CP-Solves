@@ -3,16 +3,13 @@ using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 typedef long long ll;
-const ll MOD = 1e9+7;
-const int MAX = 10000000+5;
-
 
 void solve()
 {
     ll n;
     cin>>n;
     ll sum = (n*(n+1LL))/2LL;
-    vector <ll> v(n-1);
+    vector <ll> v(n);
     for (int i = 0; i < n-1; i++){
         cin>>v[i];
     }
@@ -23,23 +20,24 @@ void solve()
     }
     
     if (v[n-2] != sum){
-        vector <int> pref, arr;
-        vector <bool> vis(n, 0);
+        vector <ll> pref, arr;
+        vector <bool> vis(n+1, 0);
         for (int i = 0; i < n-1; i++){
             pref.push_back(v[i]);
         }
         pref.push_back(sum);
 
-        int x;
-        for (int i = n-1; i > 0; i--){
-            x = pref[i]-pref[i-1];
-            arr.push_back(x);
-            vis[x] = 1;
-        }
         arr.push_back(pref[0]);
-        vis[pref[0]] = 1;
+        for (int i = 0; i < n-1; i++){
+            arr.push_back(pref[i+1]-pref[i]);
+        }
 
         for (int i = 0; i < n; i++){
+            if (arr[i] <= n)
+                vis[arr[i]] = 1;
+        }
+
+        for (int i = 1; i <= n; i++){
             if(vis[i] == 0){
                 cout<<"NO";
                 return;
@@ -48,35 +46,42 @@ void solve()
         cout<<"YES";
     }
     else {
-        vector <int> pref, arr;
-        vector <bool> vis(n, 0);
+        vector <ll> pref, arr;
+        vector <bool> vis(n+1, 0);
         for (int i = 0; i < n-1; i++){
             pref.push_back(v[i]);
         }
 
-        int x;
-        for (int i = n-2; i > 0; i--){
-            x = pref[i]-pref[i-1];
-            arr.push_back(x);
-            if (x <= n)
-                vis[x]  = 1;
-        }
         arr.push_back(pref[0]);
-        vis[pref[0]]  = 1;
-        
+        for (int i = 0; i < n-2; i++){
+            arr.push_back(pref[i+1]-pref[i]);
+        }
 
-        int cnt = 0;
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < n-1; i++){
+            if (arr[i] <= n)
+                vis[arr[i]]  = 1;
+        }
+        
+        vector <ll> missing;
+        for (int i = 1; i <= n; i++){
             if(vis[i] == 0){
-                cnt++;
+                missing.push_back(i);
             }
         }
 
-        if (cnt == 2 && )
-        cout<<"YES";        
-    }
-    
-    
+        if (missing.size() != 2)
+            cout<<"NO";       
+        else{
+            for (int i = 0; i < n-1; i++){
+                if (missing[0]+missing[1] == arr[i]){
+                    cout<<"YES";
+                    return;
+                }
+            }
+            
+            cout<<"NO";
+        }
+    }  
 }
 
 int main()
