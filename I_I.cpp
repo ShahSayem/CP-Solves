@@ -9,20 +9,32 @@ const int MAX = 10000000+5;
 
 void solve()
 {
-    int n, cnt = 0;
+    int n, ans, mx = 0;
     cin>>n;
 
-    vector <int> v(n);
+    vector <int> v(n), vec;
+    set <int> st;
     for (int i = 0; i < n; i++){
         cin>>v[i];
-    }
-        //val cnt
-    map <int, int> mp;
-    for (int i = 0; i < n; i++){
-        mp[v[i]]++;
+        
+        mx = (v[i], mx);
     }
 
-    cout<<cnt; 
+    int sz = n, idx = *st.end(), temp;
+    bool check = 1;
+    while (vec.size() > 1 || check){
+        for (int i = 1; i < n-1; i++){
+            temp = (v[i-1]+v[i+1], mx);
+            if (v[i] < temp){
+                vec.push_back(temp);
+            }
+        }
+        check = 0;
+
+    }
+    
+    
+    
 }
 
 int main()

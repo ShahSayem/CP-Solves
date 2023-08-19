@@ -8,57 +8,36 @@ const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
 const int MAX = 10000000+5;
 
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
-
-///.........Graph.........///
-//vector <int> adj[MAX];
 
 int main()
 {
     Shah_Sayem
 
-    int n, m, c;
-    cin>>n>>m>>c;
+    int n, m, c, t;
+    cin>>n>>m;
+                //cnt   time
+    vector < pair <int, int> > v(n);
+    for (int i = 0; i < n; i++){
+        cin>>c>>t;
+        v[i] = {c, t};
+    }
+    
+              //time
+    vector <ll> preSum(n);
+    preSum[0] = (v[0].first*v[0].second*1LL);
+    for (int i = 1; i < n; i++){
+        preSum[i] = preSum[i-1] + (v[i].first*v[i].second*1LL);
+    }
 
-    int grid[m+1][n+1];
-    char gr[m+1][n+1];
-    for (int i = 1; i <= m; i++){
-        for (int j = 1; j <= n; j++){
-            cin>>gr[i][j];
+    ll time, idx;
+    while (m--){
+        cin>>time;
+        idx = lower_bound(preSum.begin(), preSum.end(), time)-preSum.begin();
+
+        if (preSum[idx] >= time){
+            cout<<idx+1<<"\n";
         }
     }
     
-    vector <int> v(c);
-    map <char, int> mp;
-    char x = 'a';
-    for (int i = 0; i < c; i++){
-        cin>>v[i];
-
-        mp[x] = v[i];
-        x++;
-    }
-    mp['.'] = INT_MAX;
-    mp['B'] = INT_MAX;
-
-    // for (auto it : mp){
-    //     cout<<it.first<<"="<<it.second<<"\n";
-    // }
-    
-
-
-    for (int i = 1; i <= m; i++){
-        for (int j = 1; j <= n; j++){
-            grid[i][j] = mp[gr[i][j]];
-        }
-    }
-
-    for (int i = 1; i <= m; i++){
-        for (int j = 1; j <= n; j++){
-            grid[i][j] = mp[gr[i][j]];
-        }
-    }
-
     return 0;
 }
