@@ -1,40 +1,60 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+
 using namespace std;
 
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#include <ext/pb_ds/detail/standard_policies.hpp>
-using namespace __gnu_pbds;
-template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+vector<vector<pair<int, int>>> graph;
+vector<bool> visited;
 
-#define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define error(x)        cerr << #x << " = " << (x) <<"\n";
-#define Error(a,b)      cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
-typedef long long ll;
-typedef __int128 lll;
+pair<int, int> dfs(int node, int distance) {
+    visited[node] = true;
+    pair<int, int> farthest_node = make_pair(node, distance);
 
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 10000000+5;
+    for (pair<int, int> neighbor : graph[node]) {
+        int neighbor_node = neighbor.first;
+        int weight = neighbor.second;
+        if (!visited[neighbor_node]) {
+            int new_distance = distance + weight;
+            pair<int, int> new_node = dfs(neighbor_node, new_distance);
 
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
+            if (new_node.second > farthest_node.second) {
+                farthest_node = new_node;
+            }
+        }
+    }
 
-///.........Graph.........///
-//vector <int> adj[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
+    return farthest_node;
+}
 
-void solve()
-{
 
+void solve() {
+    int n; 
+    cin >> n;
+
+    graph.clear(), visited.clear();
+    graph.resize(n + 1);
+
+    for (int i = 0; i < n - 1; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+        graph[u].push_back(make_pair(v, w));
+        graph[v].push_back(make_pair(u, w));
+    }
+
+    visited.resize(n + 1, false);
+
+    int start_node = 0;
+    pair<int, int> farthest_node = dfs(start_node, 0);
+
+    visited.clear();
+    visited.resize(n + 1, false);
+    farthest_node = dfs(farthest_node.first, 0);
+
+    cout <<farthest_node.second;
 }
 
 int main()
 {
-    Shah_Sayem
-
     int tc = 1;
     cin>>tc;
     for (int i = 1; i <= tc; i++){

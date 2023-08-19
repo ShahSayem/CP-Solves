@@ -4,32 +4,34 @@ using namespace std;
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 typedef long long ll;
 const int MAX = 3e4+5;
-int cnt;
-vector <int> dist;
+int mxDis, mxNode;
+
 ///.........Graph.........///
              //v    w
 vector < pair<int, int> > adj[MAX];
 bool vis[MAX];
 
-void dfs(int node)
+void dfs(int node, int dist)
 {
     vis[node] = 1;
+    if (dist > mxDis){
+        mxDis = dist;
+        mxNode = node;
+    }
+    
     for (auto child: adj[node]){
         if (!vis[child.first]){
-            cnt += child.second;
-            cout<<cnt<<" ";
-            dfs(child.first);
-        }    
-
-        dist.push_back(cnt);
-        cnt = 0;
+            dfs(child.first, dist+child.second);
+        }     
     }
 }
 
 void solve()
 {
-    cnt = 0;
-    dist.clear();
+    for (int i = 0; i < MAX; i++){
+        adj[i].clear();
+    }
+    
     memset(vis, 0, sizeof(vis));
     int n, u, v, w;
     cin>>n;
@@ -39,17 +41,14 @@ void solve()
         adj[v].push_back({u, w});
     }
 
-    dfs(0);
+    mxDis = -1;
+    dfs(0, 0);
 
-    sort(dist.rbegin(), dist.rend());
+    mxDis = -1;
+    memset(vis, 0, sizeof(vis));
+    dfs(mxNode, 0);
 
-    cout<<"\n";
-    if (dist.size() == 1){
-        cout<<dist[0];
-    }
-    else {
-        cout<<dist[0]+dist[1];
-    }
+    cout<<mxDis;
 }
 
 int main()
