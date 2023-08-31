@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+ 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 typedef long long ll;
 const int MAX = 1e7+5;
@@ -8,47 +8,37 @@ const int MAX = 1e7+5;
 
 void solve()
 {
-    ll m, k, a1, ak;
+    int m, k, a1, ak, ans = 0;
     cin>>m>>k>>a1>>ak;
 
-    ll needmn = m/k, tk = 0, left, currNeed;
-    tk = k*min(needmn, ak);
-    ak -= min(needmn, ak);
-    tk += a1;
-
-    if (tk >= m){
+    m -= k*min(m/k, ak);
+    if (a1 >= m){
         cout<<0;
         return;
     }
 
-    tk -= a1;
-    tk += k;
-    if (m > tk)
-        left = m-tk;
-    else
-        left = 0;
+    m -= a1;
+    ans = m/k;
+    m %= k;
 
-    tk += min(left, a1);
-    if (tk == m){
-        cout<<1;
-        return;
-    }
+    //cout<<m<<" "<<a1<<" "<<k;
 
-    left = m-tk;
-    currNeed = left/k;
-    tk += (k*currNeed);
+    if (m && m+a1 >= k)
+        ans++;
+    else 
+        ans += m;
 
-    if (tk < m){
-        cout<<currNeed+(m-tk)+1;
-    }
-    else {
-        cout<<currNeed+1;
-    }
+    cout<<ans;
 }
-
+ 
 int main()
 {
     Shah_Sayem
+    #ifndef ONLINE_JUDGE
+        freopen("Input.txt", "r", stdin);
+        freopen("Output.txt", "w", stdout);
+        freopen("Error.txt", "w", stderr);
+    #endif
 
     int tc = 1;
     cin>>tc;
@@ -56,6 +46,6 @@ int main()
         solve();
         cout<<"\n";
     }
-
+ 
     return 0;
 }

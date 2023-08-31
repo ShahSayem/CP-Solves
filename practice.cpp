@@ -1,67 +1,105 @@
-#include <iostream>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<vector<pair<int, int>>> graph;
-vector<bool> visited;
+#define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
+typedef long long ll;
+const ll MOD = 1e9+7;
+const int MAX = 1e7+5;
 
-pair<int, int> dfs(int node, int distance) {
-    visited[node] = true;
-    pair<int, int> farthest_node = make_pair(node, distance);
+ 
+///.........Graph.........///
+// vector <int> adj[MAX];
+// vector <int> primeList[MAX];
+// bool vis[MAX];
+// int dist[MAX];
+int X[] = {1, -1, 0, 0};
+int Y[] = {0, 0, 1, -1};
 
-    for (pair<int, int> neighbor : graph[node]) {
-        int neighbor_node = neighbor.first;
-        int weight = neighbor.second;
-        if (!visited[neighbor_node]) {
-            int new_distance = distance + weight;
-            pair<int, int> new_node = dfs(neighbor_node, new_distance);
+void binaryRepresentation(int n) //is the bit on or not / Binary representation
+{
+    long i;
+    cout << "0";
+    for (i = 1 << 30; i > 0; i = i / 2)
+    {
+      if((n & i) != 0)
+      {
+        cout << "1";
+      }
+      else
+      {
+        cout << "0";
+      }
+    }
+  }
 
-            if (new_node.second > farthest_node.second) {
-                farthest_node = new_node;
+void solve()
+{
+    int x, d, cnt = 1, start = 1;
+    int rmb, remain, power = 0, mxMove = 1;
+    cin>>x;
+
+    vector <int> ans;
+    ans.push_back(start);
+    while(start < x){
+        if (start+start <= x){
+            start += start;
+            ans.push_back(start);
+            cnt++;
+        }
+        else {
+            remain = x-start;
+            for (int i = 30; i >= 0; i--){
+                if (remain & (1LL<<i) != 0){
+                    power = i;
+                    break;
+                }
+            } 
+            for (int i = 0; i < power; ++i){
+                mxMove *= 2;
             }
+
+            start += mxMove;
+            ans.push_back(start);
+            cnt++;
         }
     }
 
-    return farthest_node;
-}
-
-
-void solve() {
-    int n; 
-    cin >> n;
-
-    graph.clear(), visited.clear();
-    graph.resize(n + 1);
-
-    for (int i = 0; i < n - 1; i++) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        graph[u].push_back(make_pair(v, w));
-        graph[v].push_back(make_pair(u, w));
+    reverse(ans.begin(), ans.end());
+    cout<<cnt<<"\n";
+    for (auto it: ans){
+        cout<<it<<" ";
     }
-
-    visited.resize(n + 1, false);
-
-    int start_node = 0;
-    pair<int, int> farthest_node = dfs(start_node, 0);
-
-    visited.clear();
-    visited.resize(n + 1, false);
-    farthest_node = dfs(farthest_node.first, 0);
-
-    cout <<farthest_node.second;
 }
-
+ 
 int main()
 {
-    int tc = 1;
-    cin>>tc;
-    for (int i = 1; i <= tc; i++){
-        cout<<"Case "<<i<<": ";
-        solve();
-        cout<<"\n";
-    }
+    //Shah_Sayem
+    // #ifndef ONLINE_JUDGE
+    //     freopen("Input.txt", "r", stdin);
+    //     freopen("Output.txt", "w", stdout);
+    //     freopen("Error.txt", "w", stderr);
+    // #endif
+
+    // int tc = 1;
+    // cin>>tc;
+    // for (int i = 1; i <= tc; i++){
+    //     solve();
+    //     cout<<"\n";
+    // }
+
+    int remain = 6, power = 7;
+    // for (int i = 5; i >= 0; i--){
+    //     cout<<"in loop \n";
+    //     if (remain | (1LL<<i) != 0){
+    //         cout<<"Got power "<<i;
+    //         power = i;
+    //         break;
+    //     }
+    // } 
+
+    //cout<<power;
+
+    binaryRepresentation(4);
 
     return 0;
 }

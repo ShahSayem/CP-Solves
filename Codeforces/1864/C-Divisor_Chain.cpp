@@ -15,22 +15,16 @@ const int MAX = 1e7+5;
 int X[] = {1, -1, 0, 0};
 int Y[] = {0, 0, 1, -1};
 
-void binaryRepresentation(int n) //is the bit on or not / Binary representation
-{
-    long i;
-    cout << "0";
-    for (i = 1 << 30; i > 0; i = i / 2)
-    {
-      if((n & i) != 0)
-      {
-        cout << "1";
-      }
-      else
-      {
-        cout << "0";
-      }
+int findMSB(int num) {
+    int msb = -1;
+    while (num > 0) {
+        num >>= 1;
+        msb++;
     }
-  }
+
+    return msb;
+}
+
 
 void solve()
 {
@@ -48,20 +42,19 @@ void solve()
         }
         else {
             remain = x-start;
-            for (int i = 30; i >= 0; i--){
-                if (remain & (1LL<<i) != 0){
-                    power = i;
-                    break;
-                }
-            } 
+            power = findMSB(remain);
+            mxMove = 1;
             for (int i = 0; i < power; ++i){
                 mxMove *= 2;
             }
 
+            //cout<<mxMove;
             start += mxMove;
             ans.push_back(start);
             cnt++;
         }
+
+        //cout<<start<<" "<<power<<" "<<mxMove<<"\n";
     }
 
     reverse(ans.begin(), ans.end());
@@ -80,26 +73,14 @@ int main()
         freopen("Error.txt", "w", stderr);
     #endif
 
-    // int tc = 1;
-    // cin>>tc;
-    // for (int i = 1; i <= tc; i++){
-    //     solve();
-    //     cout<<"\n";
-    // }
+    int tc = 1;
+    cin>>tc;
+    for (int i = 1; i <= tc; i++){
+        solve();
+        cout<<"\n";
+    }
 
-    int remain = 6, power = 7;
-    // for (int i = 5; i >= 0; i--){
-    //     cout<<"in loop \n";
-    //     if (remain | (1LL<<i) != 0){
-    //         cout<<"Got power "<<i;
-    //         power = i;
-    //         break;
-    //     }
-    // } 
-
-    //cout<<power;
-
-    binaryRepresentation(4);
+    //cout<<findMSB(2);
 
     return 0;
 }

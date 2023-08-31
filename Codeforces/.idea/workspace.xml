@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e38ff9e4-6275-4166-ba58-c73cd3309819" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/1860/B_Fancy_Coins.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/1860/B_Fancy_Coins.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sublime_CP/C" beforeDir="false" afterPath="$PROJECT_DIR$/../Sublime_CP/C" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Sublime_CP/C.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Sublime_CP/C.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UVA/924-Spreading_The_News.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../UVA/924-Spreading_The_News.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../practice.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../practice.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": -1
+}]]></component>
+  <component name="ProjectId" id="2UXSiysfZBcFe33KXRxJLOgDnuL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e38ff9e4-6275-4166-ba58-c73cd3309819" name="Changes" comment="" />
+      <created>1693084571678</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1693084571678</updated>
+      <workItem from="1693084582272" duration="7000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
