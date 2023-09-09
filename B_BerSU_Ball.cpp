@@ -1,45 +1,40 @@
-//Shah Sayem
-#include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
 
-typedef long long ll;
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 102;
-
-///.........Graph.........///
-//vector <int> adj[10000000];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
+#define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
+const int MAX = 105;
 
 //.......DP.........
 int n, m, boy[MAX], girl[MAX], dp[MAX][MAX];
 
+     //boyIdx  girlIdx
 int rec(int i, int j)
 {
     if(i == n || j == m)
         return 0;
 
-    int &ret = dp[i][j];
+    if(dp[i][j] != -1)
+        return dp[i][j];
 
-    if(~ret)
-        return ret;
+    dp[i][j] = rec(i+1, j);  //chele ta nilam na case
 
-    ret = rec(i+1, j);
-
-    for (int k = j; k < m; k++){
-        if(boy[i]-1 == girl[k] || boy[i] == girl[k] || boy[i]+1 == girl[k]){
-            ret = max(ret, 1+rec(i+1, k+1));
+    for (int k = j; k < m; k++){  //newa case
+        if(abs(boy[i]-girl[k]) <= 1){
+            dp[i][j] = max(dp[i][j], 1+rec(i+1, k+1));
+        }
+        else {
+            break;
         }
     }
     
-    return ret;
+    return dp[i][j];
 }
 
-void solve()
+int main()
 {
+    Shah_Sayem
     memset(dp, -1, sizeof(dp));
+
     cin>>n;
     for (int i = 0; i < n; i++){
         cin>>boy[i];
@@ -53,19 +48,6 @@ void solve()
     sort(girl, girl+m);
 
     cout<<rec(0, 0);
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    // int t;
-    // cin>>t;
-    // while (t--){
-        solve();
-        cout<<"\n";
-    // }
 
     return 0;
 }

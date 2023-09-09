@@ -1,25 +1,24 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 
 void solve()
 {
-    int a, b, x , y;
+    int a, b;
     cin>>a>>b;
 
-    x = min(a, b);
-    y = max(a, b);
-    for (int i = 0; i < y; i++){
-        cout<<x;
+    long long sum = 0;
+    for (int i = a; i <= b; i++){
+        sum += (i*i);
     }
 
+    cout<<sum;
 }
 
 int main()
 {
     int tc = 1;
-    // cin>>tc;
+    //cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";
