@@ -6,100 +6,76 @@ typedef long long ll;
 const ll MOD = 1e9+7;
 const int MAX = 1e7+5;
 
- 
-///.........Graph.........///
-// vector <int> adj[MAX];
-// vector <int> primeList[MAX];
-// bool vis[MAX];
-// int dist[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
-
-void binaryRepresentation(int n) //is the bit on or not / Binary representation
-{
-    long i;
-    cout << "0";
-    for (i = 1 << 30; i > 0; i = i / 2)
-    {
-      if((n & i) != 0)
-      {
-        cout << "1";
-      }
-      else
-      {
-        cout << "0";
-      }
-    }
-  }
-
 void solve()
 {
-    int x, d, cnt = 1, start = 1;
-    int rmb, remain, power = 0, mxMove = 1;
-    cin>>x;
+    int n, m, k;
+    cin>>n>>m>>k;
 
-    vector <int> ans;
-    ans.push_back(start);
-    while(start < x){
-        if (start+start <= x){
-            start += start;
-            ans.push_back(start);
-            cnt++;
+    vector <int> v(n), vec(m);
+    for (int i = 0; i < n; i++){
+        cin>>v[i];
+    }
+    sort(v.begin(), v.end());
+    for (int i = 0; i < m; i++){
+        cin>>vec[i];
+    }
+    sort(vec.begin(), vec.end());
+
+    ll sum = 0;
+    for (int i = 0; i < n; i++){
+        sum += v[i];
+    }
+
+    if (k == 1){
+        if (v[0] < vec[m-1]){
+            cout<<sum-v[0]+vec[m-1];
         }
         else {
-            remain = x-start;
-            for (int i = 30; i >= 0; i--){
-                if (remain & (1LL<<i) != 0){
-                    power = i;
-                    break;
-                }
-            } 
-            for (int i = 0; i < power; ++i){
-                mxMove *= 2;
-            }
-
-            start += mxMove;
-            ans.push_back(start);
-            cnt++;
+            cout<<sum;
         }
     }
+    else if (k == 2){
+        if (v[0] < vec[m-1]){
+            sum = sum - v[0] + vec[m-1];
+            sum = sum + vec[0] - max(vec[m-1], v[n-1]); 
+        }
+        else {
+            sum = sum - v[n-1]+vec[0];
+        }
 
-    reverse(ans.begin(), ans.end());
-    cout<<cnt<<"\n";
-    for (auto it: ans){
-        cout<<it<<" ";
+        cout<<sum;
     }
+    else {
+        ll x = min(v[0], vec[0]);
+        ll y = max(v[n-1], vec[m-1]);
+
+        ll sum1 = 0;
+        if (v[0] < vec[m-1]){
+            sum = sum - v[0] + vec[m-1];
+            sum1 = sum;
+            sum = sum + x - y;
+        }
+        else {
+            sum = sum - v[n-1] + vec[0];
+        }
+
+        if (k%2 == 1)
+            cout<<sum1;
+        else 
+            cout<<sum;
+    }   
 }
- 
+
 int main()
 {
-    //Shah_Sayem
-    // #ifndef ONLINE_JUDGE
-    //     freopen("Input.txt", "r", stdin);
-    //     freopen("Output.txt", "w", stdout);
-    //     freopen("Error.txt", "w", stderr);
-    // #endif
+    Shah_Sayem
 
-    // int tc = 1;
-    // cin>>tc;
-    // for (int i = 1; i <= tc; i++){
-    //     solve();
-    //     cout<<"\n";
-    // }
-
-    int remain = 6, power = 7;
-    // for (int i = 5; i >= 0; i--){
-    //     cout<<"in loop \n";
-    //     if (remain | (1LL<<i) != 0){
-    //         cout<<"Got power "<<i;
-    //         power = i;
-    //         break;
-    //     }
-    // } 
-
-    //cout<<power;
-
-    binaryRepresentation(4);
+    int tc = 1;
+    cin>>tc;
+    while (tc--){
+        solve();
+        cout<<"\n";
+    }
 
     return 0;
 }

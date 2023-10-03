@@ -11,7 +11,7 @@ bool isValid(vector <int> &v, ll mxHight)
     ll sum = 0;
     for (int i = 0; i < n; i++){
         if (v[i] <= mxHight)
-        sum += (mxHight-v[i]);
+        sum += mxHight-v[i];
 
         if (sum > k)
             return false;
@@ -53,4 +53,3 @@ int main()
 
     return 0;
 }
-

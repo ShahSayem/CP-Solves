@@ -9,30 +9,19 @@ const int MAX = 10000000+5;
 
 void solve()
 {
-    string s;
-    cin>>s;
+    string x, z, ans = "";
+    cin>>x>>z;
 
-    int k, n = s.size(), cnt = 0 ,ans = 0;
-    cin>>k;
-
-    map <char, int> mp;
+    int n = x.size();
     for (int i = 0; i < n; i++){
-        if (!mp[s[i]]){
-            cnt++;
+        if (x[i] < z[i]){
+            cout<<-1;
+            return;
         }
-
-        mp[s[i]]++;
     }
     
-    ans = k-cnt;
-
-    if (n < k){
-        cout<<"impossible";
-    }
-    else if (cnt >= k)
-        cout<<0;
-    else
-        cout<<ans;
+    ans = z;
+    cout<<ans;
 }
 
 int main()

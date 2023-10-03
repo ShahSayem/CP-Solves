@@ -2,47 +2,67 @@
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-const int MAX = 105;
+typedef long long ll;
+const ll MOD = 1e9+7;
+const int MAX = 1e6+5;
 
-//.......DP.........
-int n, x, dp[MAX];
-vector <int> coins(MAX, 0);
+ll dp[MAX];
+vector <int> coins;
 
-      //Idx
-int rec(int i, int sum)
+ll minNoOfCoin(int x)
 {
-    if(i == n || sum == x)
+    if (x == 0)
         return 0;
 
-    if(dp[i] != -1)
-        return dp[i];
+    if (x < 0)
+        return -1;
 
-    dp[i] = rec(i+1, sum);  //coin ta nilam na case
+    if (dp[x] != 1e9)
+        return dp[x];
 
-    for (int k = i; k < n; k++){  //newa case
-        if(coins[k]+sum <= x){
-            dp[i] = min(dp[i], 1+rec(i+1, sum+coins[k]));
-        }
-        // else {
-        //     break;
-        // }
-    }
+    ll ans = 1e9, val;
+    for (int i = 0; i < coins.size(); i++){
+        val = minNoOfCoin(x-coins[i]);
+
+        if (val != -1)
+            ans = min(val+1, ans); //as I calculate for x-coins[i] t.k that means 
+    }                             //for x tk I have to take val+1 coin
+                                 //where the extra coin is coins[i]
+    if (ans == 1e9)
+        ans = -1;
+
+    return dp[x] = ans;
+}
+
+void solve()
+{
+    //memset(dp, -1, sizeof(dp));
+    for (int i = 0; i < MAX; i++){
+        dp[i] = 1e9; //as we finding min 
+    }               //initally we take MAX at every case
     
-    return dp[i];
+    int n, x;
+    cin>>n>>x;
+
+    coins.resize(n);
+    for (int i = 0; i < n; i++){
+        cin>>coins[i];
+    }
+    sort(coins.rbegin(), coins.rend());
+
+    cout<<minNoOfCoin(x);
 }
 
 int main()
 {
     Shah_Sayem
-    memset(dp, -1, sizeof(dp));
 
-    cin>>n, x;
-    for (int i = 0; i < n; i++){
-        cin>>coins[i];
+    int tc = 1;
+    //cin>>tc;
+    while (tc--){
+        solve();
+        cout<<"\n";
     }
-    sort(coins.begin(), coins.end());
-
-    cout<<rec(0, 0);
 
     return 0;
 }

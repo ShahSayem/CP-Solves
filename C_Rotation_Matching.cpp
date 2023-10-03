@@ -9,21 +9,31 @@ const int MAX = 1e7+5;
 
 void solve()
 {
-    int n, idx;
+    int n, shift;
     cin>>n;
 
-    vector <int> a(n), b(n);
+    vector <int> a(n), b(n), pos(n+1), cnt(n, 0);
     for (int i = 0; i < n; i++){
         cin>>a[i];
-    }
-    for (int i = 0; i < n; i++){
-        cin>>b[i];
+
+        pos[a[i]] = i;
     }
 
+    int ans = 0;
     for (int i = 0; i < n; i++){
-        if (a[0] == b[i])
-            idx = i;
+        cin>>b[i];
+
+        shift = pos[b[i]]-i;
+
+        if (shift < 0){
+            shift += n;
+        }
+
+        cnt[shift]++;
+        ans = max(cnt[shift], ans);
     }
+    
+    cout<<ans;
 }
 
 int main()

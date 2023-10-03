@@ -5,29 +5,25 @@ typedef long long ll;
 
 void solve()
 {
-    int n, k;
-    cin>>n>>k;
-
-    vector <int> v(n);
+    int n;
+    cin>>n;
+    
+    vector <int> v(n), suffSum(n, 1);
     for (int i = 0; i < n; i++){
         cin>>v[i];
     }
-    sort(v.begin(), v.end());
 
-    if (n == 1){
-        cout<<v[0]+k;
-        return;
+    for (int i = n-2; i >= 0; i--){
+        if ((0 < v[i] && 0 < v[i+1]) || (0 > v[i] && 0 > v[i+1])){
+            continue;
+        }
+
+        suffSum[i] += suffSum[i+1];
     }
 
-    ll ans = v[0];
-    for (int i = 1; i < n; i++){
-        if (k >= i){
-            ans = v[i];
-            k -= i;
-        }    
+    for (auto it : suffSum){
+        cout<<it<<" ";
     }
-
-    cout<<ans;
 }
 
 int main()
@@ -35,7 +31,7 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    //cin>>tc;
+    cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";

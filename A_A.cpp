@@ -4,15 +4,21 @@ using namespace std;
 
 void solve()
 {
-    int a, b;
-    cin>>a>>b;
+    int n;
+    cin>>n;
 
-    long long sum = 0;
-    for (int i = a; i <= b; i++){
-        sum += (i*i);
+    if (n == 0){
+        cout<<0;
+        return;
+    }
+    
+    vector <int> v(n, 1);
+    //v[1] = 3, v[2] = 6;
+    for (int i = 1; i < n; i++){
+        v[i] = v[i-1]+(i+1);
     }
 
-    cout<<sum;
+    cout<<v[n-1];
 }
 
 int main()
