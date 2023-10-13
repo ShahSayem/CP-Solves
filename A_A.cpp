@@ -1,24 +1,25 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+typedef long long ll;
 
 void solve()
 {
-    int n;
-    cin>>n;
+    string s, t, curr;
+    cin>>s>>t;
 
-    if (n == 0){
-        cout<<0;
-        return;
-    }
-    
-    vector <int> v(n, 1);
-    //v[1] = 3, v[2] = 6;
-    for (int i = 1; i < n; i++){
-        v[i] = v[i-1]+(i+1);
+    int n = s.size();
+    for (int i = 0; i < n; i++){
+        curr = s.substr(n-i, i) + (s.substr(0, n-i));
+        if (curr == t){
+            cout<<"Yes";
+            return;
+        }
+
+        //cout<<curr<<" ";
     }
 
-    cout<<v[n-1];
+    cout<<"No";
 }
 
 int main()

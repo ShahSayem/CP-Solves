@@ -9,18 +9,22 @@ const int MAX = 10000000+5;
 
 void solve()
 {
-    string x, z, ans = "";
-    cin>>x>>z;
+    int n;
+    cin>>n;
 
-    int n = x.size();
+    vector <string> v(n);
+    map <string, int> mp;
     for (int i = 0; i < n; i++){
-        if (x[i] < z[i]){
-            cout<<-1;
-            return;
-        }
+        cin>>v[i];
+
+        mp[v[i]]++;
     }
     
-    ans = z;
+    ll ans = mp["O"] + max(mp["A"], mp["B"]);
+    if (mp["A"] || mp["B"]){
+        ans += mp["AB"];
+    }
+
     cout<<ans;
 }
 
@@ -29,7 +33,7 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    //cin>>tc;
+    cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";

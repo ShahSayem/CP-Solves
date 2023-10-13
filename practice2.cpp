@@ -1,48 +1,25 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <unordered_map>
-
+#include<bits/stdc++.h>
 using namespace std;
+#define ll long long
 
-int solve(string& s, int pos, int prev, unordered_map<string, int>& memo) {
-    // Base case: if we have reached the end of the string
-    if (pos == s.length()) {
-        return 0;
+int main()
+{
+    string s;cin>>s;
+    ll ans=0, n = s.size(), x = 1;
+    x = x<<(n-1);
+    
+    for(int i = 0; i < x; i++){
+        int pos=0, curr = i, all=0;
+        for(int j=0;j<n;j++){
+                all=0;
+            if(curr & (1<<j)){
+                ans+=stoll(s.substr(pos,j-pos+1));
+                pos=j+1;
+                all=1;
+            }
+        }
+        if(!all)ans+=stoll(s.substr(pos));
     }
-
-    // Check if the subproblem has already been solved
-    string key = to_string(pos) + "-" + to_string(prev);
-    if (memo.find(key) != memo.end()) {
-        return memo[key];
-    }
-
-    // Initialize the minimum operations to a large value
-    int minOperations = INT_MAX;
-
-    // If the current character is the same as the previous character
-    if (s[pos] == s[prev]) {
-        // Make the current character different from the previous one
-        minOperations = min(minOperations, solve(s, pos + 1, pos + 1, memo) + 1);
-    }
-
-    // No operation is required, move to the next character
-    minOperations = min(minOperations, solve(s, pos + 1, prev, memo));
-
-    // Memoize the result
-    memo[key] = minOperations;
-
-    return minOperations;
-}
-
-int main() {
-    string s;
-    cin >> s;
-
-    unordered_map<string, int> memo;
-    int minOperations = solve(s, 0, -1, memo);
-
-    cout << minOperations << endl;
-
+    cout<<ans<<"\n";
     return 0;
 }

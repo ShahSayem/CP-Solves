@@ -6,35 +6,34 @@ typedef long long ll;
 const ll MOD = 1e9+7;
 const int MAX = 10000000+5;
 
+ll getExp(ll a, ll b)
+{
+    if (b == 0)
+        return 1;
+    if (b%2 == 0){
+        auto x = getExp(a, b/2)%MOD;
+        return (x*x)%MOD;
+    }
+    return (a * getExp(a, b-1))%MOD;
+}  
 
 void solve()
 {
-    int n, ans, mx = 0;
-    cin>>n;
+    ll a, b, c;
+    cin>>a>>b>>c;
 
-    vector <int> v(n), vec;
-    set <int> st;
-    for (int i = 0; i < n; i++){
-        cin>>v[i];
-        
-        mx = (v[i], mx);
+    ll x = getExp(b, c);
+    x = getExp(a, x);
+
+    ll y = getExp(a, b);
+    y = getExp(y, c);
+
+    if (x == y){
+        cout<<"What an excellent example!";
     }
-
-    int sz = n, idx = *st.end(), temp;
-    bool check = 1;
-    while (vec.size() > 1 || check){
-        for (int i = 1; i < n-1; i++){
-            temp = (v[i-1]+v[i+1], mx);
-            if (v[i] < temp){
-                vec.push_back(temp);
-            }
-        }
-        check = 0;
-
+    else {
+        cout<<"Oh look, a squirrel!";
     }
-    
-    
-    
 }
 
 int main()
