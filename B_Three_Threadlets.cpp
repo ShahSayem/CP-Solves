@@ -20,27 +20,25 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n, m, cnt = 0;
-    cin>>n>>m;
+    vector <int> v(3);
+    cin>>v[0]>>v[1]>>v[2];
 
-    string a, b;
-    cin>>a>>b;
+    int noOfOperation = 4, n;
+    while (noOfOperation--){
+        n = v.size();
+        sort(v.rbegin(), v.rend());
 
-    for (int i = 0; i < 6; i++){
-        for (int j = 0; j < n-m+1; j++){
-            if (a.substr(j, m) == b){
-                cout<<cnt;
-
-                return;
-            } 
+        if (v[0] == v[n-1]){
+            cout<<"YES";
+            return;
         }
-        
-        a += a;
-        n += n;
-        cnt++;
+
+        v.push_back(v[0]-v[n-1]);
+
+        v[0] -= v[n];
     }
     
-    cout<<-1;
+    cout<<"NO";
 }
 
 int main()

@@ -1,34 +1,94 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-#include <ext/pb_ds/detail/standard_policies.hpp>
-using namespace __gnu_pbds;
-template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define error(x)        cerr << #x << " = " << (x) <<"\n";
-#define Error(a,b)      cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
 typedef long long ll;
-//typedef __int128 lll; //cpp20
-
-const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
-const int MAX = 1e7+5;
+const int MAX = 100+5;
 
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
+int dp[MAX], cnt = 0;
+vector <int> v;
 
-///.........Graph.........///
-//vector <int> adj[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
+bool isPossible(vector <int> &vec, ll target)
+{
+    ll chceckSum = 0, cnt = 0, n = vec.size();
+    vector < vector <int> > allPossible;
+    vector <ll> idxSum;
+
+    ll sum = 0, sum2 = 0;
+    for (int i = 0; i < n; i++){
+        chceckSum += i;
+        for (int j = i; j < n; j++){ 
+            sum = 0, sum2 = 0;
+            vector <int> curr, currIdx;          // Now A[i..j] is the subarray
+            for (int k = i; k <= j; k++){
+                curr.push_back(v[k]);
+                currIdx.push_back(k);
+                sum += v[k];
+                sum2 += k;
+            }
+            
+            if (sum == target){
+                allPossible.push_back(curr);
+                idxSum.push_back(sum2);
+                cnt++;
+            }
+        }
+    }
+
+    //cout<<chceckSum<<"\n";
+    sort(idxSum.begin(), idxSum.end());
+
+    // for (auto it : idxSum){
+    //     cout<<it<<" ";
+    // }
+
+    for (int i = 0; i < idxSum.size(); i++){
+        for (int j = i+1; j < idxSum.size(); j++){
+            for (int k = j+1; k < idxSum.size(); k++){
+                //cout<<i<<" "<<j<<" "<<k<<"\n";
+                if (idxSum[i]+idxSum[j]+idxSum[k] == chceckSum){
+                    //cout<<idxSum[i]<<" "<<idxSum[j]<<" "<<idxSum[k];
+                    return true;
+                }
+            }
+        } 
+    }
+
+    return false;
+}
 
 void solve()
 {
+   // memset(dp, -1, sizeof(dp));
+    int n;
+    cin>>n;
+    v.resize(n);
+    for (int i = 0; i < n; i++){
+        cin>>v[i];
+    }
+    
+    ll sum = 0, mx = 0;
+    vector <int> vec;
+    for (int i = 0; i < n; i++){
+        sum += v[i];
+        mx = max(ll(v[i]), mx);
 
+        vec.push_back(v[i]);
+        if (sum == 0){
+            cout<<"1\n";
+            continue;
+        }
+
+        if ((sum%3 == 0) && (mx <= sum/3LL)){
+            if (isPossible(vec, sum/3)){
+                cout<<"1\n";
+                continue;
+            }
+        }
+        
+        cout<<"0\n";
+    }
 }
 
 int main()
@@ -38,9 +98,9 @@ int main()
     int tc = 1;
     cin>>tc;
     for (int i = 1; i <= tc; i++){
-        cout<<"Case "<<i<<": ";
+        cout<<"Case "<<i<<":\n";
         solve();
-        cout<<"\n";
+        //cout<<"\n";
     }
 
     return 0;
