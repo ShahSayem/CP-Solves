@@ -5,27 +5,28 @@ typedef long long ll;
 
 void solve()
 {
-    string s, t, curr;
-    cin>>s>>t;
+    int n;
+    cin>>n;
 
-    int n = s.size();
+    vector <int> v(n);
     for (int i = 0; i < n; i++){
-        curr = s.substr(n-i, i) + (s.substr(0, n-i));
-        if (curr == t){
-            cout<<"Yes";
-            return;
-        }
-
-        //cout<<curr<<" ";
+        cin>>v[i];
     }
+    sort(v.rbegin(), v.rend());
 
-    cout<<"No";
+    int curr = 0;
+    for (int i = 0; i < n; i++){
+        if (v[i] > curr)
+            curr++;
+    }
+    
+    cout<<curr;
 }
 
 int main()
 {
     int tc = 1;
-    //cin>>tc;
+    cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";

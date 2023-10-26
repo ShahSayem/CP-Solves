@@ -4,45 +4,51 @@ using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 typedef long long ll;
+//typedef __int128 lll; //cpp20
 const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
-const int MAX = 10000000+5;
+const int MAX = 1e5+5;
 
+//int dp[MAX];
+//int arr[MAX];
+//int tree[4*MAX+1];
+
+///.........Graph.........///
+//vector <int> adj[MAX];
+int X[] = {1, -1, 0, 0};
+int Y[] = {0, 0, 1, -1};
+bool check[MAX];
+
+void solve()
+{
+    int n, x;
+    cin>>n;
+
+    //vector <int> v(n);
+    for (int i = 0; i < n; i++){
+        cin>>x;
+
+        check[x] = 1;
+    }
+    
+    for (int i = 0; i < MAX; i++){
+        if (!check[i]){
+            cout<<i;
+            return;
+        }
+    }
+}
 
 int main()
 {
     Shah_Sayem
-    #ifndef ONLINE_JUDGE
-        freopen("Input.txt", "r", stdin);
-        freopen("Output.txt", "w", stdout);
-        freopen("Error.txt", "w", stderr);
-    #endif
 
-    int n, m, c, t;
-    cin>>n>>m;
-                //cnt   time
-    vector < pair <int, int> > v(n);
-    for (int i = 0; i < n; i++){
-        cin>>c>>t;
-        v[i] = {c, t};
-    }
-    
-              //time
-    vector <ll> preSum(n);
-    preSum[0] = (v[0].first*v[0].second*1LL);
-    for (int i = 1; i < n; i++){
-        preSum[i] = preSum[i-1] + (v[i].first*v[i].second*1LL);
+    int tc = 1;
+    //cin>>tc;
+    while (tc--){
+        solve();
+        cout<<"\n";
     }
 
-    ll time, idx;
-    while (m--){
-        cin>>time;
-        idx = lower_bound(preSum.begin(), preSum.end(), time)-preSum.begin();
-
-        if (preSum[idx] >= time){
-            cout<<idx+1<<"\n";
-        }
-    }
-    
     return 0;
 }

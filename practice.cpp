@@ -8,12 +8,14 @@ const int MAX = 1e7+5;
 
 void solve()
 {
-    ll sum = 0;
+    int arr[10];
+    memset(arr, -5, sizeof(arr));
+
     for (int i = 0; i < 10; i++){
-        sum += i;
+        cout<<arr[i]<<" ";
     }
     
-    cout<<sum;
+    
 }
 
 int main()
