@@ -6,57 +6,59 @@ typedef long long ll;
 const ll MOD = 1e9+7;
 const int MAX = 1e4+5;
 
-vector <bool> composite(MAX+1);
-vector <int> primeLsit;
-
-void sieveOfEratosthenes()
-{
-    composite[0] = true, composite[1] = true;
-    for (int i = 2; i*i <= MAX; i++){
-        if (!composite[i]){
-            for (int j = i*i; j <= MAX; j+=i){
-                composite[j] = true;
-            } 
-        }
-    }  
-
-    for (int i = 0; i < MAX; i++){
-        if (!composite[i])
-            primeLsit.push_back(i);
-    }  
-} 
-
 void solve()
 {
-    int n, k, cnt = 0, curr;
-    cin>>n>>k;
+    string s;
+    cin>>s;
 
-    for (int j = 0; j < primeLsit.size(); j++){
-        curr = primeLsit[j] + primeLsit[j+1] + 1;
-        if (!composite[curr] && curr <= n){
-            cnt++;
+    int n = s.size(), leftBrac = -1, rightBrac = -1, leftCol = -1, rightCol = -1;
+    for (int i = 0; i < n; i++){
+        if (s[i] == '[' && leftBrac == -1){
+            leftBrac = i;
         }
 
-        if (cnt >= k){
-            cout<<"YES";
-            return;
+        if (s[i] == ':' && leftCol == -1 && leftBrac != -1){
+            leftCol = i;
         }
     }
     
-    cout<<"NO";
+    for (int i = n-1; i >= 0; i--){
+        if (s[i] == ']' && rightBrac == -1){
+            rightBrac = i;
+        }
+
+        if (s[i] == ':' && (leftCol < i && leftCol != -1) && rightBrac != -1){
+            //cout<<rightCol<<" "<<rightBrac<<" "<<leftCol<<"\n";
+            rightCol = i;
+            break;
+        }
+    }
+
+    int ans = 4;
+    if ((leftBrac != -1 && rightBrac != -1) && (leftCol != -1 && rightCol != -1)){
+        for (int i = leftCol+1; i < rightCol; i++){
+            if (s[i] == '|'){
+                ans++;
+            }
+        }
+        
+        cout<<ans;
+    }
+    else {
+        //cout<<leftBrac<<" "<<rightBrac<<" "<<leftCol<<" "<<rightCol;
+        cout<<-1;
+    }
 }
 
 int main()
 {
     Shah_Sayem
 
-    sieveOfEratosthenes();
-
     int tc = 1;
     //cin>>tc;
     while (tc--){
         solve();
-        cout<<"\n";
+        //cout<<"\n";
     }
 
     return 0;

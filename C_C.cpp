@@ -1,72 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 typedef long long ll;
+const ll MOD = 1e9+7;
+const int MAX = 2e5+5;
 
 void solve()
 {
-    int n, x, curr;
-    string s, temp;
-    
-    cin>>s;
-    n = s.size();
-
-    set <char> st;
-    map <char, int> mp;
+    int n, x;
+    cin>>n;
+    vector <int> v;
+    map <int, int> mp;
     for (int i = 0; i < n; i++){
-        mp[s[i]]++;
+        cin>>x;
+
+        x %= 10;
+        if (mp[x] < 3){
+            v.push_back(x);
+            mp[x]++;
+        }
     }
 
-    char ch, c;
-    
-    for (int i = 0; i < n; i++){
-        if (s[i] == '6'){
-            ch = '5';
-            for (int j = 0; j < 5; j++){
-                if (mp[ch] && ((ch != s[i]) || mp[ch] > 1)){
-                    curr = ch-'0';
-                    x = 60 + curr;
-                    c = x;
-                    
-                    //cout<<x<<" ";
-                    st.insert(c);
+    int sz = v.size();
+    for (int i = 0; i < sz-2; i++){
+        for (int j = i+1; j < sz-1; j++){
+            for (int k = j+1; k < sz; k++){
+                if ((v[i]+v[j]+v[k])%10 == 3){
+                    cout<<"YES";
+                    return;
                 }
-
-                ch++;
             }
         }
-        else if (s[i] == '9'){
-            if (mp['0']){
-                st.insert('Z');
-            }
-        }
-        else if (s[i] > '6' && s[i] < '9'){ //7, 8
-            ch = '0';
-            for (int j = 0; j < 10; j++){
-                if (mp[ch] && ((ch != s[i]) || mp[ch] > 1)){
-                    curr = ch-'0';
-                    if (s[i] == '7')
-                        x = 70 + curr;
-                    else 
-                        x = 80 + curr;
-
-                    c = x;
-                    //cout<<x<<" ";
-
-                    st.insert(c);
-                }
-
-                ch++;
-            }
-        }
-        // else { //1...5
-
-        // }
     }
 
-    for (auto it : st){
-        cout<<it;
-    } 
+    cout<<"NO";   
 }
 
 int main()

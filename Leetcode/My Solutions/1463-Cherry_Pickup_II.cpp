@@ -45,36 +45,39 @@ int mxCherryPic(int x, int y1, int y2)
 
 void solve()
 {
-    cin>>n>>m;
+    //cin>>n>>m;
 
-    memset(dp, -1, sizeof(dp));
-    for (auto it : v){
-        it.clear();
-    }
+    // for (auto it : v){
+    //     it.clear();
+    // }
     
     // v.resize(n);
     // for (auto it : v){
     //     it.resize(m);
     // }
 
-    for (int i = 0; i < n; i++){
-        vector <int> temp(m);
-        for (int j = 0; j < m; j++){
-            cin>>temp[j];
+    // for (int i = 0; i < n; i++){
+    //     vector <int> temp(m);
+    //     for (int j = 0; j < m; j++){
+    //         cin>>temp[j];
 
-            //v[i].push_back(temp[j]);
-        }
+    //         //v[i].push_back(temp[j]);
+    //     }
         
-        v.push_back(temp);
-    }
+    //     v.push_back(temp);
+    // }
 
-    // vector<vector<int>> matrix{
-    //     {3, 1, 1},
-    //     {2, 5, 1},
-    //     {5, 6, 3},
-    // };
+    memset(dp, -1, sizeof(dp));
+    vector< vector<int> > matrix{
+        {3, 1, 1},
+        {2, 5, 1},
+        {1, 5, 5},
+        {2, 1, 1}
+    };
 
-    cout<<mxCherryPic(0, 0, m-1);
+    n = 4, m = 3;
+    v = matrix;
+    cout<<mxCherryPic(0, 0, m-1); //24
 }
 
 int main()
@@ -82,7 +85,7 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    cin>>tc;
+    //cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";

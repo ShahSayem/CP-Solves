@@ -6,16 +6,10 @@ typedef long long ll;
 const ll MOD = 1e9+7;
 const int MAX = 1e7+5;
 
+
 void solve()
 {
-    int arr[10];
-    memset(arr, -5, sizeof(arr));
 
-    for (int i = 0; i < 10; i++){
-        cout<<arr[i]<<" ";
-    }
-    
-    
 }
 
 int main()

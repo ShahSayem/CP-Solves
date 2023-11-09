@@ -1,28 +1,22 @@
-#include <bits/stdc++.h>
-#define   ll   long long
-using namespace std;
+#include <stdio.h>
 
-void solve(){
-
-    ll n;
-    cin>>n;
-
-    ll series = (n*(n+1))/2;
-
-    for (ll i = 1; i <= n; i *= 2){
-        series -= (i*2);
-    }
-    
-    cout<<series;
-}
 int main()
 {
-    int t;
-    cin>>t;
-    while(t--){
-        solve();
-        cout<<endl;
+    int tc = 1;
+    scanf("%d", &tc);
+    while (tc--){
+        long long n;
+        scanf("%lld", &n);
+
+        long long sum = 0;
+        sum = (n*(n+1)) / 2;
+
+        for (int i = 1; i <= n; i = i*2){
+            sum = sum - (i*2);
+        }
+        
+        printf("%lld\n", sum);
     }
-    
+
     return 0;
 }
