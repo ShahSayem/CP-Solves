@@ -11,8 +11,21 @@ void solve()
     ll n, k;
     cin>>n>>k;
 
-    int z = min(n, k), x;
+    ll ans1 = (n % k) / 2;
+    ll ans2 = ((n % k) + k + 1) / 2;
 
+    ll val1 = (ans1 % k) * ((n-ans1) % k);
+    ll val2 = INT_MIN;
+
+    if (ans2 < k)
+        val2 = (ans2 % k) * ((n-ans2) % k);
+
+    if (val1 > val2){
+        cout<<ans1;
+    }
+    else {
+        cout<<ans2;
+    }
 }
 
 int main()

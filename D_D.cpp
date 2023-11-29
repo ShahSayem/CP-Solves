@@ -21,24 +21,20 @@ void solve()
     for (int i = 0; i < n; i++){
         cin>>v[i];
     }
-    sort(v.begin(), v.end());
 
-    map < int, int > mp;
-    for (int i = 0; i < n; i++){
-        if(v[i])
-            mp[v[i]-1]++;
+    if (v[0] == v[n-1]){
+        cout<<"YES";
+        return;
+    }
 
-        mp[v[i]]++;
-        mp[v[i]+1]++;
+    for (int i = 0; i < n-1; i++){
+        if (v[i] == v[0] && v[i+1] == v[n-1]){
+            cout<<"YES";
+            return;
+        }
     }
-    
-    int ans = 0;
-    for (auto it : mp){
-        ans = max(it.second, ans);
-        // cout<<it.second<<" ";
-    }
-    
-    cout<<ans;
+
+    cout<<"NO";
 }
 
 int main()
@@ -46,7 +42,7 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    //cin>>tc;
+    cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";

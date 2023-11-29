@@ -11,16 +11,18 @@ const ll MAX = 1e14+5;
 
 void solve()
 {
-    ll l, r, d;
-    cin>>l>>r>>d;
+    string a, b;
+    cin>>a>>b;
 
-    if (d < l || d > r){
-        cout<<d;
-        return;
+    cout<<a<<"\n";
+    cout<<b<<"\n";
+    for (int i = 0; i < a.size(); i++){
+        if (a[i] == b[i])
+            cout<<".";
+        else    
+            cout<<"*";
     }
-    
-    ll ans = ((r/d)+1)*d;
-    cout<<ans;
+    cout<<"\n";
 }
 
 int main()

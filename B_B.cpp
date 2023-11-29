@@ -8,46 +8,19 @@ const int MAX = 1e4+5;
 
 void solve()
 {
-    string s;
-    cin>>s;
+    int n, k;
+    cin>>n>>k;
 
-    int n = s.size(), leftBrac = -1, rightBrac = -1, leftCol = -1, rightCol = -1;
+    int ans = INT_MAX;
+    vector <int> v(n);
     for (int i = 0; i < n; i++){
-        if (s[i] == '[' && leftBrac == -1){
-            leftBrac = i;
-        }
+        cin>>v[i];
 
-        if (s[i] == ':' && leftCol == -1 && leftBrac != -1){
-            leftCol = i;
-        }
+        if (k%v[i] == 0)
+            ans = min(ans, k/v[i]);
     }
     
-    for (int i = n-1; i >= 0; i--){
-        if (s[i] == ']' && rightBrac == -1){
-            rightBrac = i;
-        }
-
-        if (s[i] == ':' && (leftCol < i && leftCol != -1) && rightBrac != -1){
-            //cout<<rightCol<<" "<<rightBrac<<" "<<leftCol<<"\n";
-            rightCol = i;
-            break;
-        }
-    }
-
-    int ans = 4;
-    if ((leftBrac != -1 && rightBrac != -1) && (leftCol != -1 && rightCol != -1)){
-        for (int i = leftCol+1; i < rightCol; i++){
-            if (s[i] == '|'){
-                ans++;
-            }
-        }
-        
-        cout<<ans;
-    }
-    else {
-        //cout<<leftBrac<<" "<<rightBrac<<" "<<leftCol<<" "<<rightCol;
-        cout<<-1;
-    }
+    cout<<ans;
 }
 
 int main()
@@ -55,10 +28,10 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    //cin>>tc;
+   // cin>>tc;
     while (tc--){
         solve();
-        //cout<<"\n";
+        cout<<"\n";
     }
 
     return 0;

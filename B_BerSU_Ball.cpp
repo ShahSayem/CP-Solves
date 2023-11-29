@@ -4,30 +4,26 @@ using namespace std;
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 const int MAX = 105;
 
-//.......DP.........
-int n, m, boy[MAX], girl[MAX], dp[MAX][MAX];
+vector <int> boy(MAX), girl(MAX);
+int dp[MAX][MAX];
+int n, m;
 
-     //boyIdx  girlIdx
-int rec(int i, int j)
+int mxPair(int x, int y)
 {
-    if(i == n || j == m)
+    if (x < 0 || y < 0)
         return 0;
 
-    if(dp[i][j] != -1)
-        return dp[i][j];
-
-    dp[i][j] = rec(i+1, j);  //chele ta nilam na case
-
-    for (int k = j; k < m; k++){  //newa case
-        if(abs(boy[i]-girl[k]) <= 1){
-            dp[i][j] = max(dp[i][j], 1+rec(i+1, k+1));
-        }
-        else {
-            break;
-        }
+    if (dp[x][y] != -1){
+        return dp[x][y];
     }
+
+    int pick = 0, notPick;
+    if (abs(boy[x]-girl[y]) <= 1)
+        pick = 1 + mxPair(x-1, y-1);
+ 
+    notPick = max(mxPair(x, y-1), mxPair(x-1, y));
     
-    return dp[i][j];
+    return dp[x][y] = max(pick, notPick);
 }
 
 int main()
@@ -39,15 +35,15 @@ int main()
     for (int i = 0; i < n; i++){
         cin>>boy[i];
     }
-    sort(boy, boy+n);
+    sort(boy.begin(), boy.begin()+n);
 
     cin>>m;
     for (int i = 0; i < m; i++){
         cin>>girl[i];
     }
-    sort(girl, girl+m);
+    sort(girl.begin(), girl.begin()+m);
 
-    cout<<rec(0, 0);
+    cout<<mxPair(n-1, m-1);
 
     return 0;
 }

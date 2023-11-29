@@ -20,40 +20,23 @@ void solve()
     for (int i = 0; i < m; i++){
         cin>>b[i];
     }
-    sort(b.rbegin(), b.rend());
+    sort(b.begin(), b.end());
 
-    int idx = -1;
-    for (int i = 0; i < m; i++){
-        if (b[i] >= a[0]){
-            idx = i;
-        }
-        else {
-            break;
-        }
-    }
-
-    for (int i = 0;idx != -1 && i <= idx; i++){
-        cout<<b[i]<<" ";
-    }
-    idx++;
-
-    int AIdx = n;
+    int j = m-1;
     for (int i = 0; i < n; i++){
-        if (idx < m && a[i] < b[idx]){
-            AIdx = i;
-            break;
+        while (j >= 0 && b[j] >= a[i]){
+            cout<<b[j]<<" ";
+            j--;
         }
-
+        
         cout<<a[i]<<" ";
     }
 
-    for (int i = idx; i < m; i++){
-        cout<<b[i]<<" ";
-    }  
 
-    for (int i = AIdx; i < n; i++){
-        cout<<a[i]<<" ";
-    } 
+    while (j >= 0){
+        cout<<b[j]<<" ";
+        j--;
+    }
 }
 
 int main()
