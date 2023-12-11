@@ -1,8 +1,1 @@
-n = int(input())
-for _ in range(n):
-    c = 1
-    st = int(input())
-    while(st>0):
-        c = c*st
-        st = st-1
-    print(c)
+print("Hello")
