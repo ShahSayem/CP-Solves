@@ -14,7 +14,7 @@ const int MAX = 10000000+5;
 
 ///.........Graph.........///
 //vector <int> adj[MAX];
-
+//
 void solve()
 {
     int n, amount;
