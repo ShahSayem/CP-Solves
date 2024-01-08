@@ -15,26 +15,32 @@ const int MAX = 1e7+5;
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vector <int> v(n);
-    for (int i = 0; i < n; i++){
-        cin>>v[i];
-    }
+    ll h, w;
+    cin>>h>>w;
 
-    if (v[0] == v[n-1]){
-        cout<<"YES";
-        return;
-    }
+    char grid[h][w];
 
-    for (int i = 0; i < n-1; i++){
-        if (v[i] == v[0] && v[i+1] == v[n-1]){
-            cout<<"YES";
-            return;
+    for (int i = 0; i < h; i++){
+        for (int j = 0; j < w; j++){
+            cin>>grid[i][j];
         }
     }
 
-    cout<<"NO";
+    for (int i = 0; i < h; i++){
+        for (int j = 0; j < w; j++){
+            if (grid[i][j] == '#'){
+                if ((i && (grid[i-1][j] == '#')) || ((i < h-1) && (grid[i+1][j] == '#')) || (j && (grid[i][j-1] == '#')) || ((j < w-1) && (grid[i][j+1] == '#'))){
+                    continue;
+                }
+                else {
+                    cout<<"No";
+                    return;
+                }
+            }
+        }
+    }
+
+    cout<<"Yes";
 }
 
 int main()
@@ -42,7 +48,7 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    cin>>tc;
+    //cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";

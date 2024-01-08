@@ -1,46 +1,45 @@
 #include <bits/stdc++.h>
-#include <iostream>
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 typedef long long ll;
-//typedef __int128 lll; //cpp20
-const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
-const int MAX = 1e7+5;
+const int MAX = 1e5+5;
 
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
-
-///.........Graph.........///
-//vector <int> adj[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
+bool vis[MAX];
 
 void solve()
 {
-    int n, cnt = 0;
+    int n, cnt;
     cin>>n;
 
-    ll x = 0;
-    vector <int> v(n);
+    ll sum = 0;
+    memset(vis, 0, sizeof(vis));
+    vector <int> v(n), ans;
     for (int i = 0; i < n; i++){
         cin>>v[i];
     }
     sort(v.begin(), v.end());
 
-    for (int i = 0; i < n; i++){
-        if (x >= v[i]){
-            cnt++;
+    sum += v[0];
+    ans.push_back(v[0]);
+    for (int i = 1; i < n; i++){
+        if (v[i] > sum){
+            sum+=v[i];
+            ans.push_back(v[i]);
+            vis[i] = 1;
         }
+    }
 
-        x += v[i];
+    cnt = n-ans.size();
+    for (int i = 1; i < n; i++){
+        if (!vis[i])
+            ans.push_back(v[i]);
     }
 
     cout<<cnt<<"\n";
     for (int i = 0; i < n; i++){
-        cout<<v[i]<<" ";
+        cout<<ans[i]<<" ";
     }
 }
 

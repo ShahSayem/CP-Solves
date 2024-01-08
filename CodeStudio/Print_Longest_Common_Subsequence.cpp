@@ -34,7 +34,31 @@ void solve()
 
     memset(dp, -1, sizeof(dp));
     int n = a.size(), m = b.size();
-    cout<<longestSubseq(n-1, m-1);
+    int sz = longestSubseq(n-1, m-1);
+
+    int i = n-1, j = m-1, idx = sz-1;
+    string ans = "";
+    for (int i = 0; i < sz; i++){
+        ans+='#';
+    }
+    
+    while (i >= 0 && j >= 0){
+        if (a[i] == b[j]){
+            ans[idx] = a[i];
+            i--, j--;
+            idx--;
+        }
+        else {
+            if (dp[i-1][j] > dp[i][j-1]){
+                i--;
+            }
+            else {
+                j--;
+            }
+        }
+    }
+
+    cout<<ans;
 }
 
 int main()

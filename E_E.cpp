@@ -9,13 +9,14 @@ const int MAX = 1e7+5;
 
 void solve()
 {
-    int n, k, x;
-    cin>>n>>k;
+    int n, k, l, m;
+    cin>>n>>k>>l;
 
+    m = n*k;
     map <int, int> mp;
-    for (size_t i = 0; i < n; i++){
-        cin>>x;
-        mp[x]++;
+    vector <int> v(m);
+    for (int i = 0; i < m; i++){
+        cin>>v[i];
     }
     
     ll sum = 0, ans = 0;
@@ -29,8 +30,6 @@ void solve()
     for (size_t i = 0; i < v.size(); i++){
         if (i >= k)
             ans += v[i];
-
-        //cout<<v[i]<<" ";
     }
     
     cout<<ans;

@@ -8,19 +8,31 @@ const int MAX = 1e4+5;
 
 void solve()
 {
-    int n, k;
-    cin>>n>>k;
+    int a, b, cnt = 0, check = 0, mx = 0;
+    cin>>a>>b;
 
-    int ans = INT_MAX;
-    vector <int> v(n);
-    for (int i = 0; i < n; i++){
+    vector <char> v(a);
+    for (int i = 0; i < a; i++){
         cin>>v[i];
 
-        if (k%v[i] == 0)
-            ans = min(ans, k/v[i]);
+        if (!check && v[i] == '*')
+            cnt++, check = 1;
+
+        if (check){
+            if (v[i] == '*' && v[i-1] == v[i])
+                cnt++;
+            else {
+                mx = max(cnt, mx);
+                cnt = 0, check = 0;
+            }
+        }
     }
     
-    cout<<ans;
+    mx = max(cnt, mx);
+    if (mx >= b)
+        cout<<"YES";
+    else 
+        cout<<"NO";
 }
 
 int main()
@@ -28,7 +40,7 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-   // cin>>tc;
+    cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";

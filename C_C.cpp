@@ -10,19 +10,20 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    ll a, b, c;
-    cin>>a>>b>>c;
+    int n, odd = 0, even = 0;
+    cin>>n;
 
-    ll x;
-    if ((a < b) && (b < c)){
-        cout<<0;
+    vector <int> v(n);
+    for (int i = 0; i < n; i++){
+        cin>>v[i];
+
+        if (v[i] & 1)
+            odd++;
+        else 
+            even++;
     }
-    else if ((a > b) && (b > c)){
-        x = a|b|c;
-        cout<<x; //here every bit is set of a, b, c. When we we make xor with a,
-    }            //it will be lowest. similar for b, c
-    else
-        cout<<-1;
+
+    cout<<odd/2;
 }
 
 int main()
