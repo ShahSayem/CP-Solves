@@ -9,20 +9,33 @@ const int MAX = 10000000+5;
 
 void solve()
 {
-    int n, cnt = 0;
-    cin>>n;
+    int n, m;
+    cin>>n>>m;
 
-    vector <int> v(n);
-    for (int i = 0; i < n; i++){
-        cin>>v[i];
-    }
-        //val cnt
-    map <int, int> mp;
-    for (int i = 0; i < n; i++){
-        mp[v[i]]++;
+    string s;
+    cin>>s;
+
+    int idx = 0;
+    map <char, char> mp;
+    for (int i = 33; i <= 126; i++){
+        mp[i] = i; 
     }
 
-    cout<<cnt; 
+    char a, b;
+    for (int i = 0; i < m; i++){
+        cin>>a>>b;
+
+        for (auto &it : mp){
+            if (it.second == a)
+                it.second = b;  
+            else if (it.second == b)
+                it.second = a;
+        }
+    }
+
+    for (int i = 0; i < n; i++){
+        cout<<mp[s[i]];
+    }
 }
 
 int main()

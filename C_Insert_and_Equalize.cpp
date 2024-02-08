@@ -1,26 +1,57 @@
 #include <bits/stdc++.h>
-#include <iostream>
 using namespace std;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
 typedef long long ll;
-//typedef __int128 lll; //cpp20
-const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
 const int MAX = 1e7+5;
 
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
-
-///.........Graph.........///
-//vector <int> adj[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
+    ll n, GCD = 0;
+    cin>>n;
+
+    vector <int> v(n);
+    vector <ll> vec;
+    for (int i = 0; i < n; i++){
+        cin>>v[i];
+    }
+    sort(v.begin(), v.end());
+
+    for (int i = 1; i < n; i++){
+        GCD = __gcd(GCD, 1LL*(v[i]-v[i-1]));
+    }
+
+    if (n == 1){
+        cout<<1;
+        return;
+    }
+
+    ll check = 0, ans = 0, mx;
+    for (int i = n-1; i > 0; i--){
+        vec.push_back(v[i]);
+
+        if (check)
+            continue;
+
+        if ((v[i]-GCD) > v[i-1]){
+            check = 1;
+            vec.push_back(v[i]-GCD);
+        }
+    }
+    vec.push_back(v[0]);
+    reverse(vec.begin(), vec.end());
     
+    if (!check)
+        vec.push_back(v[n-1]+GCD);
+
+    mx = vec[n];
+    for (int i = 0; i <= n; i++){
+        ans += ((mx-vec[i])/GCD);
+    }
+    
+    cout<<ans;
 }
 
 int main()

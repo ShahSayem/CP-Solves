@@ -9,10 +9,10 @@ const ll MAX = 1e14+5;
 
 void solve()
 {
-    int n;
-    cin>>n;
+    int x, y;
+    cin>>x>>y;
 
-    cout<<n%10;
+    cout<<x*y;
 }
 
 int main()

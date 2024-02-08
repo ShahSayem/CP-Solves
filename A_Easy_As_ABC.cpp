@@ -1,77 +1,79 @@
 #include <bits/stdc++.h>
-#include <iostream>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp> 
+#include <ext/pb_ds/detail/standard_policies.hpp>
+using namespace __gnu_pbds;
 using namespace std;
-
-#define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-typedef long long ll;
-//typedef __int128 lll; //cpp20
-const long double pi = 3.14159265358979323846;
-const ll MOD = 1e9+7;
-const int MAX = 1e7+5;
-
-//int dp[MAX];
-//int arr[MAX];
-//int tree[4*MAX+1];
-
-///.........Graph.........///
-//vector <int> adj[MAX];
-int X[] = {1, -1, 0, 0};
-int Y[] = {0, 0, 1, -1};
-
-void solve()
-{
-    char grid[3][3];
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 3; j++){
-            cin>>grid[i][j];
-        }
+#define getbit(n, i) (((n) & (1LL << (i))) != 0) 
+#define setbit0(n, i) ((n) & (~(1LL << (i)))) 
+#define setbit1(n, i) ((n) | (1LL << (i))) 
+#define togglebit(n, i) ((n) ^ (1LL << (i))) 
+#define lastone(n) ((n) & (-(n))) 
+char gap = 32;
+#define int long long
+#define ll long long 
+#define lll __int128_t
+#define pb push_back
+typedef tree<
+int,
+null_type,
+less<int>,
+rb_tree_tag,
+tree_order_statistics_node_update>
+ordered_set;
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+ll hashPrime = 1610612741;
+void solve() {
+    int n; cin >> n;
+    int a[n + 1];
+    for(int i = 1; i <= n; i++) cin >> a[i];
+    sort(a + 1, a + n + 1);
+    int GCD = 0;
+    for(int i = 2; i <= n; i++) {
+        GCD = __gcd(GCD, a[i] - a[i - 1]);
     }
-    
-
-    vector <string> v;
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 3; j++){
-            for (int k = 0; k < 3; k++){
-                for (int l = 0; l < 3; l++){
-                    for (int m = 0; m < 3; m++){
-                        for (int n = 0; n < 3; n++){
-                            if ((make_pair(i, j) != make_pair(k, l)) && (make_pair(i, j) != make_pair(m, n)) && (make_pair(k, l) != make_pair(m, n))){
-                                                                                                                          //2nd                                                                              //3rd
-                                if ((((i+1 == k) || (i-1 == k) || (i == k)) && ((j+1 == l) || (j-1 == l) || (j == l))) && (((i+1 == m) || (i-1 == m) || (i == m)) && ((j+1 == n) || (j-1 == n) || (j == n))) && (((k+1 == m) || (k-1 == m) || (k == m)) && ((l+1 == n) || (l-1 == n) || (l == n)))){
-                                    string s = "";
-                                    s += grid[i][j];
-                                    s += grid[k][l];
-                                    s += grid[m][n];
-
-                                    v.push_back(s);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    if(GCD == 0) {
+        cout << n << "\n";
+        return ;
     }
+    int flag = 0;
+    vector<int> calc;
+    int curr = n;
+    while(curr > 1) {
+        calc.push_back(a[curr]);
+        if(flag) {
+            curr--;
+            continue;
+        }
+        if(a[curr] - GCD > a[curr - 1]) {
+            flag = 1;
+            calc.push_back(a[curr] - GCD);
+        }
+        curr--;
+    }
+    calc.push_back(a[1]);
+    reverse(calc.begin(), calc.end());
+    if(flag == 0) {
+        calc.push_back(a[n] + GCD);
+    }
+    int ans = 0;
+    for(int i = 0; i <= n; i++) {
+        ans = ans + (calc[n] - calc[i]) / GCD;
+    }
+    //cout << ans << "\n";
 
-    sort(v.begin(), v.end());
-    //cout<<v[0];
-
-    for (auto it : v){
+    for (auto it : calc){
         cout<<it<<" ";
     }
     
 }
-
-int main()
-{
-    Shah_Sayem
-
-    int tc = 1;
-    //cin>>tc;
-    while (tc--){
+signed main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+    int t; cin >> t;
+    while(t--) {
         solve();
-        cout<<"\n";
     }
-
     return 0;
 }
