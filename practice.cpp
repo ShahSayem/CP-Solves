@@ -8,12 +8,8 @@ using namespace __gnu_pbds;
 template <typename T> using oset = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 #define Shah_Sayem ios_base::sync_with_stdio(false);cin.tie(NULL);
-#define error(x)        cerr << #x << " = " << (x) <<"\n";
-#define Error(a,b)      cerr<<"( "<<#a<<" , "<<#b<<" ) = ( "<<(a)<<" , "<<(b)<<" )\n";
 typedef long long ll;
 //typedef __int128 lll; //cpp20
-
-const long double pi = 3.14159265358979323846;
 const ll MOD = 1e9+7;
 const int MAX = 1e7+5;
 
@@ -28,16 +24,9 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    oset <int> Oset;
-    for (int i = 0; i < 3; i++){
-        Oset.insert(i);
-    }
     
-    int x;
-    for (auto it : Oset){
-        cout<<it<<" ";
-    }
-    
+
+
 }
 
 int main()
@@ -45,9 +34,9 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    cin>>tc;
+    // cin>>tc;
     for (int i = 1; i <= tc; i++){
-        cout<<"Case "<<i<<": ";
+        //cout<<"Case "<<i<<": ";
         solve();
         cout<<"\n";
     }

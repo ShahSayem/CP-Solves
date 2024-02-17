@@ -6,35 +6,59 @@ typedef long long ll;
 const ll MOD = 1e9+7;
 const int MAX = 10000000+5;
 
+bool cmp(pair <ll, pair <int, string> > a, pair <ll, pair <int, string> > b)  //Decending
+{
+    if (a.first !=  b.first){
+        return a.first > b.first;
+    }
+
+    return a.second.first < b.second.first;
+}
 
 void solve()
 {
-    int n, m;
-    cin>>n>>m;
+    int n;
+    cin>>n;
 
-    string s;
-    cin>>s;
-
-    int idx = 0;
-    map <char, char> mp;
-    for (int i = 33; i <= 126; i++){
-        mp[i] = i; 
-    }
-
-    char a, b;
-    for (int i = 0; i < m; i++){
-        cin>>a>>b;
-
-        for (auto &it : mp){
-            if (it.second == a)
-                it.second = b;  
-            else if (it.second == b)
-                it.second = a;
-        }
-    }
-
+    ll curr, pScore;
+    string name;
+    vector <int> v(6);
+    vector < pair <ll, pair <int, string> > > ans;
+    map <ll, int> cntPos;
     for (int i = 0; i < n; i++){
-        cout<<mp[s[i]];
+        cin>>name>>pScore;
+
+        curr = 0;
+        for (auto &&i : v){
+            cin>>i;
+
+            curr += i;
+        }
+        sort(v.begin(), v.end());
+
+        curr -= (v[0]+v[5]);
+        curr += (pScore*10);
+
+        ans.push_back({curr, {i, name}});
+    }
+    sort(ans.begin(), ans.end(), cmp);
+
+    int sz = ans.size(), cnt = 0;
+    for (int i = 0; i < sz; i++){
+        if (cnt < 1000){
+            if (cnt >= 3){
+                if (!cntPos[ans[i].first]){
+                    break;
+                }   
+            }
+            
+            cntPos[ans[i].first]++;
+            cout<<ans[i].second.second<<" "<<ans[i].first<<"\n";
+            cnt++;
+        }
+        else {
+            break;
+        }
     }
 }
 
@@ -46,7 +70,7 @@ int main()
     // cin>>tc;
     while (tc--){
         solve();
-        cout<<"\n";
+        //cout<<"\n";
     }
 
     return 0;

@@ -10,20 +10,50 @@ int Y[] = {0, 0, 1, -1};
 
 void solve()
 {
-    int n, odd = 0, even = 0;
-    cin>>n;
+    int n, m, x;
+    cin>>n>>m;
 
-    vector <int> v(n);
+    ll sumA = 0, sumB = 0;
+    //vector <int> v(n);
     for (int i = 0; i < n; i++){
-        cin>>v[i];
+        cin>>x;
 
-        if (v[i] & 1)
-            odd++;
-        else 
-            even++;
+        sumA += x;
     }
 
-    cout<<odd/2;
+    for (int i = 0; i < m; i++){
+        cin>>x;
+
+        sumB += x;
+    }
+
+    if (n > m){
+        if (sumA >= sumB){
+            cout<<"ALICE";
+        }
+        else {
+            cout<<"BOB";
+        }
+    }
+    else if (n == m){
+        if (sumA > sumB){
+            cout<<"ALICE";
+        }
+        else if (sumA == sumB){
+            cout<<"TIED";
+        }
+        else {
+            cout<<"BOB";
+        }
+    }
+    else {
+        if (sumA < sumB){
+            cout<<"BOB";
+        }
+        else {
+            cout<<"ALICE";
+        }
+    }
 }
 
 int main()
@@ -31,7 +61,7 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    cin>>tc;
+    //cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";

@@ -9,10 +9,17 @@ const ll MAX = 1e14+5;
 
 void solve()
 {
-    int x, y;
-    cin>>x>>y;
+    int n, m;
+    string s, t;
+    cin>>s>>t;
 
-    cout<<x*y;
+    n = s.size(), m = t.size();
+
+    for (int i = 0; i < ; i++)
+    {
+        /* code */
+    }
+    
 }
 
 int main()
@@ -20,7 +27,7 @@ int main()
     Shah_Sayem
 
     int tc = 1;
-    cin>>tc;
+    //cin>>tc;
     while (tc--){
         solve();
         cout<<"\n";
